@@ -1,0 +1,102 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+a{
+	text-decoration: none;
+	color: #535455;
+}
+
+.head {
+	padding-top: 0;
+	box-sizing: content-box;
+	height: 5%;
+	background-color: rgb(248, 248, 248, 1);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.title {
+	display: inline-block;
+	text-align: center;
+}
+
+body {
+	background: #F4F4F4;
+	font-size: 14px;
+}
+
+.ResetBox {
+	background-color: #FFFFFF;
+	margin-top: 1.4375rem;
+}
+
+
+.textbox {
+	width: 100%;
+	height: 18px;
+	overflow: hidden;
+	font-size: 20px;
+	padding: 12px 0;
+	display: flex;
+	align-items: center;
+	/* margin: 8px 0 0 0; */
+	/* border-bottom: 1px solid #F7F7F8; */
+}
+
+.textbox i {
+	width: 30px;
+	float: left;
+	text-align: center;
+}
+
+.textbox input {
+	border: none;
+	outline: none;
+	background: none;
+	font-size: 15px;
+	width: 80%;
+	float: left;
+	margin: 0 0 0 20px;
+}
+
+.verify{
+	width: 60% !important;
+}
+
+
+.textbox input::-webkit-input-placeholder {
+	/* placeholder颜色  */
+	color: #aab2bd;
+	/* placeholder字体大小  */
+	font-size: 14px;
+}
+
+.getVercode{
+	font-size: 14px;
+	display: inline-block;
+	background-color: #A1A5AE;
+	color: #FFFFFF;
+	padding: 0.3125rem 0.625rem;
+	width: 20%;
+	height: 1.25rem;
+	text-align: center;
+	margin: 0.3125rem;
+	border-radius: 5px;
+}
+
+
+.btn{
+	height: 44px;
+	width: 90%;
+	margin:1.4375rem 5% 0.625rem;
+	line-height: 26px;
+	border-radius: 8px;
+	background-color: rgba(28, 223, 112, 1);
+	color: rgba(255, 255, 255, 1);
+	font-size: 18px;
+	text-align: center;
+	
+}

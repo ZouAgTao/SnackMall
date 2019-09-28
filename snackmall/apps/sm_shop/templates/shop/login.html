@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- <link rel="stylesheet" href="//unpkg.com/element-ui@1.3.6/lib/theme-default/index.css"> -->
+		<link href="./css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="css/login.css" type="text/css" rel="stylesheet">
+		<base href="./" />
+		<title> </title>
+	</head>
+	<body>
+		<div id="page">
+			<div id="hd">
+				<div class="head">
+					<i class="fa fa-angle-left" style="font-size: 1.75rem; padding:10px ;"></i>
+					<span class="title">登陆</span>
+					<span></span>
+				</div>
+			</div>
+			<div id="bd">
+				<form>
+					<div class="loginBox">
+						<div class="textbox">
+							<i class="fa fa-user" aria-hidden="true" style="color: #555555;"></i>
+							<input type="text" placeholder="请输入手机号" id="usn" name="id" v-model="usn" maxlength="11"/>
+						</div>
+						<hr style="margin: 0 30px; border-top: #F4F4F4;" />
+						<div class="textbox">
+							<i class="fa fa-lock" aria-hidden="true" style="color: #555555;"></i>
+							<input type="password" placeholder="请输入密码" id="upw" name="passwd" v-model="upw"/>
+						</div>
+					</div>
+				</form>
+				<input type="button" class="btn" id="loginBtn" value="登陆" @click=" checkInfo() "/>
+				<!-- <button class="btnn">登陆</button> -->
+				<div class="loginTab">
+					<a href="forgetPsw.html">忘记密码</a>
+					<a href="register.html">注册</a>
+				</div>
+		  </div>
+		</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script src="js/login.js"></script>
+	</body>
+</html>

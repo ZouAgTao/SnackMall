@@ -1,0 +1,336 @@
+* {
+    padding: 0;
+    margin: 0;
+    color: #494949;
+}
+li {
+    list-style: none;
+}
+a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    color: #000;
+} 
+header {
+    height: 65px;
+    line-height: 65px;
+    color: #fff;
+    font-size: 17px;
+    text-align: center;
+    background-color: #00a0dc;
+    position: relative;
+}
+
+
+/* h4 {
+    display: block;
+    margin-block-start: 0.625rem;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0.625rem;
+    font-weight: bold;
+} */
+
+.notice {
+    height: 40px; 
+}
+.goods {
+    display: flex;
+    position: absolute;
+    top: 132px;
+    bottom: 46px;
+    width: 100%;
+    background-color: #eee;
+    /* padding-top: 2px; */
+    /* overflow: hidden; */
+}
+
+.swiper-container {
+    width: 100%;
+    height: 132px;
+	position: relative;
+}  
+
+.left {
+	/* grow  shrink basis */
+	flex: 0 0 84px;
+	width: 84px;
+	background: #f4f4f4;
+	overflow: scroll;
+}
+.left>ul>li {
+	height: 38px;
+	line-height: 38px;
+	text-align: center;
+	/* border-bottom: 1px solid #ccc; */
+	box-sizing: border-box;
+}
+.click {
+    background-color: #fff;
+}
+.right {
+    flex: 1;
+    background-color: #fff;
+    overflow: scroll;
+} 
+.right .goodTitle {
+	padding: 0 3%;
+	border-bottom: #F4F4F4 1px solid;
+	background-color: #FFFFFF;
+	position: sticky;
+	line-height: 30px;
+	top: 0;
+	z-index: 10;
+}
+.good {
+	min-height: 110px;
+	background-color: #fff;
+	/* margin: 0 5%; */
+}
+.good li {
+	/* border-bottom: 1px solid #ccc; */
+	height: 110px;
+	margin: 3px 0;
+	 /* font-size: 21px; */
+    /* line-height: 20px; */
+	text-align: left;
+	display: flex;
+	justify-content: space-between;
+	word-wrap: break-word;
+	word-break: break-all;
+	overflow: hidden;
+}
+.good li i {
+    font-size: 18px;
+    /* line-height: 80px; */
+    color: #00a0dc;
+    padding: 0 4px;
+} 
+
+.good li .imgBox{
+	display: flex;
+	align-items: center;
+}
+
+
+.good li img{
+	height: 100px;
+	width: 100px;
+	position: relative;
+	align-self: center;
+	/* top: 10px; */
+}
+
+.good li h4{
+	display: block;
+	/* position: relative; */
+	font-size: 15px;
+	/* margin: 0; */
+	padding: 0 0.625rem 0 0;
+}
+
+.good li p{
+	/* display: inline-block; */
+	/* line-height: 30px; */
+	font-size: 14px;
+	color: red;
+	font-weight: bold;
+}
+
+.good li .tag{
+	width: 51px;
+	height: 22px;
+	border-radius: 5px;
+	padding: 2px 4px;
+	font-size: 10px;
+	background-color: rgba(255, 255, 255, 0);
+	color: rgba(255, 57, 64, 1);
+	text-align: center;
+	border: 1px solid rgba(255, 137, 141, 0.38);
+}
+
+/* 点击添加按钮缓慢弹出订单个数以及减少按钮 */
+.pop {
+    display: inline-block;
+    position: relative;
+    opacity: 0;
+    transition: all ease .5s;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.pop span{
+	display: inline-block;
+	padding-left: 5px;
+}
+
+.pop i {
+    transform: rotate(0deg); 
+    transition: all ease .5s;
+}
+.mov {
+    left: 0;
+    opacity: 1;
+}
+.pop.mov i {
+    transform: rotate(-360deg);
+}
+.good li>div>i {
+    position: relative; 
+    background-color: #fff;
+    z-index: 5;
+} 
+
+
+.footer {
+    background-color: #555;
+    width: 100%;
+    height: 46px;
+    line-height: 46px;
+    bottom: 0;
+    position: fixed;
+    font-size: 45px;
+    padding-left: 10px;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+	z-index: 13;
+}
+
+.footer i {
+    color: #fff;
+}
+.footer .total {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0px;
+    left: 46px;
+    color: #fff;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: orangered;
+    font-size: 10px;
+}
+.pay {
+    /* background-color: rgb(78, 207, 45); */
+    background-color: #FFD154;
+    color: #000000;
+    font-size: 18px;
+    padding: 0 20px;
+}
+.notPay {
+    background-color: #bbb;
+}
+
+/* 运动小球 */
+.pointPre {  /* 动画的小球 */
+    display: none;
+}
+.pointOuter {
+    position: absolute;  
+    z-index: 114;  
+    /* 当小球抛出时遵循贝塞尔曲线过渡 */
+    -webkit-transition: all 1s cubic-bezier(0.39,-0.4,0.83,0.23) 0s;
+    transition: all 1s cubic-bezier(0.39,-0.4,0.83,0.23) 0s; 
+}
+
+.point-inner {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #FFD154;
+    /* 过渡属性名称 过渡时间 过渡曲线 延迟时间 */
+    transition: all 1s ease 0s;
+    -webkit-transition: all 1s ease 0s;     
+}  
+
+
+/*section*/
+.card_goods_list header{
+	display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: .3rem .6rem;
+    background-color: #eceff1;
+	height: 40px;
+}
+
+
+.card_goods_list{
+	position: fixed;
+    width: 100%;
+    padding-bottom: 2.875rem;
+    z-index: 12;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+}
+
+.card_goods_list h4{
+	font-size: 1.125rem;
+	font-weight: 500;
+}
+
+
+.card_goods_list .clearAll{
+	font-size: 0.875rem;
+	
+}
+
+
+.goods_list{
+	max-height: 400px;
+	overflow-y: scroll;
+}
+
+
+.goods_list p{
+	padding-left: 0.625rem ;
+	line-height: 1.875rem;
+	font-size: 16px;
+	font-weight: 350;
+}
+
+.price_tab{
+	display: block;
+	color:#FF0000 ;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.buttonSet{
+	display: inline-block;
+}
+
+/* 商品条目 */
+.card_goods_list li{
+	border-bottom: 1px solid #ccc; 
+	/* height: 50px; */
+}
+
+.goods_list_price{
+	display: flex;
+	justify-content: space-between;
+	padding: 0.125rem 0.625rem 0.625rem 0.625rem;
+}
+
+.hidden{
+	display: none;
+}
+
+.overlayer{
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	background-color: rgb(0,0,0,0.5);
+}
+

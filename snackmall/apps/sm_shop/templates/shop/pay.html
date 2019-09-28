@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>pay</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no" />
+		<link href="./css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" media="screen" href="./css/pay.css" />
+		<title></title>
+	</head>
+	<body>
+		<div id='app'>
+			<div class="adress-card">
+				<div class="adress-card-switch">
+					<div class="switcher">送货</div>
+					<div class="switcher">自提</div>
+				</div>
+				<div class="adress-card-add">请添加收货地址</div>
+			</div>
+			
+			<div class="goods-list">
+				<div class="goods-list-header"><p>已选商品（{{total}}）</p></div>
+				<div class="goods-list-card">
+					<ul>
+						<li v-for="(item,index) in shopList" :key="index">
+							<div>
+								<img :src=" item.src " />
+							</div>
+							<div>
+								<h4>{{ item.name }}</h4>
+								<p>{{ item.num }}</p>
+							</div>
+							<div>
+								<p>{{ '￥' + item.price }}</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="pay-method">
+				<span>请选择支付方式</span>
+				<div class="pay-method-card">
+					
+				</div>
+			</div>
+			
+			<div class="footer">
+				<div>
+					<span>合计：</span>
+					<span>{{totalPrice}}</span>
+				</div>
+				<div class="footer-pay">下单</div>
+			</div>
+			
+		</div>
+		
+		
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+		<script src="index.js"></script>
+	</body>
+</html>

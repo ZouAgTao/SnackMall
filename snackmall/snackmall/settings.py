@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'apps.sm_auth',
     'apps.sm_shop',
     'apps.sm_manager',
-    'apps.sm_info'
+    'apps.sm_info',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
 ]
 
 ROOT_URLCONF = 'snackmall.urls'

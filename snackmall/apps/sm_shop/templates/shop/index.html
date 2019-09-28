@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- <base href="./" /> -->
+		<base href="static/shop/" />
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>首页</title>
+		<link href="./css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" media="screen" href="./css/index.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+	</head>
+	<body>
+
+		<i class="fa fa-user-circle" aria-hidden="true" style="position: absolute;font-size: 24px; top: 11px; left: 9px; z-index: 100;"></i>
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">1</div>
+				<div class="swiper-slide">2</div>
+				<div class="swiper-slide">3</div>
+			</div>
+			<!-- 如果需要分页器 -->
+			<div class="swiper-pagination"></div>
+
+			<!-- 如果需要导航按钮 -->
+			<!-- 	<div class="swiper-button-prev"></div>
+				<div class="swiper-button-next"></div> -->
+		</div>
+
+		<script src="js/swiper.min.js"></script>
+		<script>
+			var mySwiper = new Swiper('.swiper-container', {
+				// direction: 'vertical', // 垂直切换选项
+				// loop: true, // 循环模式选项
+				// autoplay:true,//等同于以下设置
+				autoplay: {
+					delay: 3000, // 3秒切换一次
+					stopOnLastSlide: false,
+					disableOnInteraction: true,
+				},
+
+				// effect: 'fade',
+
+				// 如果需要分页器
+				pagination: {
+					el: '.swiper-pagination',
+					dynamicBullets: true,
+				},
+
+				// 如果需要前进后退按钮
+				navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev',
+				},
+
+				// 如果需要滚动条
+				scrollbar: {
+					el: '.swiper-scrollbar',
+				},
+			});
+		</script>
+
+		<div id="app">
+			<div class="goods">
+				<div class="left" ref="left">
+					<ul>
+						<!-- item是遍历循环的对象  index是当前项的索引 -->
+						<li v-for="(item, index) in navs" :key="index" :class="{click: selector==index}" @click="toHash(item, index)">[[item]]</li>
+						<!-- v-bind 动态绑定class属性  对象 {key：value，key2：value2  类名：booleaen } -->
+					</ul>
+				</div>
+
+
+				<div class="right" @scroll="listScroll">
+					<ul>
+						<li v-for="(good, index1) in goods" :key="index1" :id="good.title">
+							<p class="goodTitle">[[good.title]]</p>
+							<ul class="good">
+
+								<li v-for="(item, index2) in good.items" :key="index2">
+									<div class="imgBox">
+										<img :src="item.src" />
+									</div>
+									<div style="height: 109px; width: 100%; display: flex; flex-direction: column; justify-content: space-around;">
+										<h4>[[ item.name ]]</h4>
+										<div v-show="true"><span class="tag">满15减5</span></div>
+										<div>
+											<p style="display: inline-block; width: 35%; line-height: 22px;">[[ '￥' + item.price ]]</p>
+											<div :class="{pop: true, mov: item.num>0}">
+												<i class="fa fa-minus-circle" @click="reduce(index1, index2)" style="font-size: 18px; color: #FFD154;"></i>
+												<span>[[item.num]]</span>
+											</div>
+											<i class="fa fa-plus-circle" @click="increase(index1, index2, $event)" style="font-size: 18px; color: #FFD154;"></i>
+										</div>
+									</div>
+									<!-- <div> -->
+
+									<!-- </div> -->
+								</li>
+							</ul>
+						</li>
+						<!-- 添加反馈入口 -->
+						<li>还想吃啥？告诉我</li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- 运动的小球 -->
+			<div id="points">
+				<div class="pointOuter pointPre">
+					<div class="point-inner"></div>
+				</div>
+				<div class="pointOuter pointPre">
+					<div class="point-inner"></div>
+				</div>
+				<div class="pointOuter pointPre">
+					<div class="point-inner"></div>
+				</div>
+				<div class="pointOuter pointPre">
+					<div class="point-inner"></div>
+				</div>
+				<div class="pointOuter pointPre">
+					<div class="point-inner"></div>
+				</div>
+				<div class="pointOuter pointPre">
+					<div class="point-inner"></div>
+				</div>
+				<div class="pointOuter pointPre">
+					<div class="point-inner"></div>
+				</div>
+			</div>
+
+			<div class="footer">
+				<div style="border: #007AFF 1px solid;">
+					<div style="border: #000000 1px solid;">
+						<i class="fa fa-shopping-cart" v-on:click="showShop()"></i>
+						<!--记录订单总数  -->
+						<div class="total" v-show="total>0">[[total]]</div>
+					</div>
+					<div style="border: #000000 1px solid">
+						<p>[[totalPrice]]</p>
+					</div>
+				</div>
+				<div :class="{pay: true, notPay: total==0}">去结算</div>
+			</div>
+			<!-- 蒙版 -->
+			<div :class="{overlayer : IsShowlist , hidden : IsHidden}" @touchmove.prevent @click="showIndex()"></div>
+
+			<section :class="{card_goods_list : IsShowlist , hidden : IsHidden}">
+				<header>
+					<h4>已选商品</h4>
+					<div class="clearAll" @click="clearAll()">
+						<i class="fa fa-trash-o" aria-hidden="true"></i>
+						<span>清空</span>
+					</div>
+				</header>
+				<div class="goods_list">
+					<ul>
+						<li v-for="(s,index3) in shopList">
+							<p>[[s.name]]</p>
+							<div class="goods_list_price">
+								<div class="price_tab">[['¥'+s.price]]</div>
+								<div class="buttonSet">
+									<div :class="{pop: true, mov: s.num>0}" style="display: inline-block; ">
+										<i class="fa fa-minus-circle" @click="reduceInTab(index3)" style="font-size: 20px; color: #FFD154;"></i>
+										<span>[[s.num]]</span>
+									</div>
+									<i class="fa fa-plus-circle" @click="increaseInTab(index3)" style="font-size: 20px; color: #FFD154;"></i>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</section>
+		</div>
+
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="./js/index.js"></script>
+
+	</body>
+</html>
