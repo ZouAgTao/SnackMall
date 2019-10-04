@@ -1,65 +1,120 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<base href="./" />
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>pay</title>
 		<meta name="viewport" content="width=device-width, user-scalable=no" />
-		<link href="./css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" media="screen" href="./css/pay.css" />
+		<link href="com_css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" media="screen" href="shop/css/pay.css" />
 		<title></title>
 	</head>
 	<body>
 		<div id='app'>
+			<!-- 收获地址切换 -->
 			<div class="adress-card">
 				<div class="adress-card-switch">
-					<div class="switcher">送货</div>
-					<div class="switcher">自提</div>
+					<div :class="{switcher : isDelivery,switcherBlank :isDoor}" @click="switchDeli()">送货</div>
+					<div :class="{switcherBlank : isDelivery,switcher :isDoor}" @click="switchDeli()">自提</div>
 				</div>
-				<div class="adress-card-add">请添加收货地址</div>
+				<div :class="{adress_card_add :isDelivery,hidden :isDoor}">
+					<div :class="{hidden :isLogin}">
+						<i class="fa fa-map-marker" aria-hidden="true" style="font-size: 18px;width: 20px;"></i><span>请添加收货地址</span><i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;width: 20px;"></i>
+					</div>
+					<div :class="{hidden : !isLogin,Delivery_login : isLogin}">
+						<div>
+							<span class="recvInfo" style="font-weight: 600; font-size: 14px;">[[RecvInfoC.recv_location]]</span><br />
+							<span class="recvInfo">[[RecvInfoC.recv_name]]</span>
+							<span class="recvInfo">[[RecvInfoC.recv_phone]]</span>
+						</div>
+						<div>
+							<i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;width: 20px;padding: 10px 0 10px 10px;"></i>
+						</div>
+					</div>
+				</div>
+				
+				<div :class="{adress_card_add :isDoor,hidden :isDelivery}">
+					<span class="recvInfo" style="font-weight: 600; font-size: 14px;">[[RecvInfoB.recv_location]]</span><br />
+					<span class="recvInfo">[[RecvInfoB.recv_name]]</span>
+					<span class="recvInfo">[[RecvInfoB.recv_phone]]</span>
+				</div>
 			</div>
 			
+			<!-- 已选商品卡片 -->
 			<div class="goods-list">
-				<div class="goods-list-header"><p>已选商品（{{total}}）</p></div>
+				<div class="goods-list-header">
+					<p>已选商品（[[total]]）</p>
+				</div>
 				<div class="goods-list-card">
 					<ul>
 						<li v-for="(item,index) in shopList" :key="index">
-							<div>
+							<div class="imgBox">
 								<img :src=" item.src " />
 							</div>
-							<div>
-								<h4>{{ item.name }}</h4>
-								<p>{{ item.num }}</p>
+							<div class="goodInfo">
+								<h4>[[ item.name ]]</h4>
+								<p>×[[ item.num ]]</p>
 							</div>
-							<div>
-								<p>{{ '￥' + item.price }}</p>
+							<div class="goodPrice">
+								<span class="price">[[ '￥' + item.price *item.num ]]</span>
 							</div>
 						</li>
 					</ul>
 				</div>
 			</div>
-			
-			<div class="pay-method">
-				<span>请选择支付方式</span>
+			<!-- pay支付方式卡片 -->
+			<div class="pay-method" v-show="isDelivery">
+				<div class="goods-list-header">
+					<p>支付方式</p>
+				</div>
 				<div class="pay-method-card">
-					
+					<div style="display: flex; align-items: center; padding: 10px;">
+						<i class="fa fa-smile-o" aria-hidden="true" style="font-size: 20px;display: inline-block;"></i>
+						<span style="display: inline-block; padding-left: 10px;">货到付款</span>
+					</div>
+					<i class="fa fa-check-circle" aria-hidden="true" style="color: #FBB61C; font-size: 20px; display: inline-block; line-height: 40px;"></i>
+				</div>
+				<div style="padding: 10px; font-size: 12px; font-weight: 400;">
+					提示：送货上门现场付款，仅支持支付宝和微信支付
+				</div>
+			</div>
+			
+			<div class="pay-method" v-show="!isDelivery">
+				<div class="goods-list-header">
+					<p>上门自提时间</p>
+				</div>
+				<div>
+					请填写预计取货时间：<input type="text" id="pickTime" name=""/>
 				</div>
 			</div>
 			
 			<div class="footer">
 				<div>
 					<span>合计：</span>
-					<span>{{totalPrice}}</span>
+					<span>[[totalPrice]]</span>
 				</div>
 				<div class="footer-pay">下单</div>
 			</div>
-			
+
 		</div>
-		
-		
+
+
 		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-		<script src="index.js"></script>
+		<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> -->
+		<script src="com_js/vue.js"></script>
+		<script src="shop/js/pay.js"></script>
+		
+		<script>
+			for (var i = 0; i < localStorage.length; i++) {
+				//获取本地储存的key
+				var key = localStorage.key(i);
+				var good = localStorage.getItem(key);
+				good = JSON.parse(good);
+				console.log(good);
+				app.$data.shopList.push(good);
+			}
+		</script>
 	</body>
 </html>

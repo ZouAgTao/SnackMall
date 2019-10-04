@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- <base href="./" /> -->
-		<base href="static/shop/" />
+		<base href="static/" />
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>首页</title>
-		<link href="./css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" media="screen" href="./css/index.css" />
-		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link href="com_css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" media="screen" href="shop/css/index.css" />
+		<link rel="stylesheet" type="text/css" href="com_css/swiper.min.css" />
+		<script type="text/javascript">
+			window.onload=function(){
+				//轮播图自适应设备高度
+				let width = window.innerWidth;
+				let height = width * 0.352;
+				const heightInfo = height+'px';
+				document.getElementById("swiper").style.height= heightInfo;
+				document.getElementsByClassName("goods")[0].style.top= heightInfo;
+
+			};
+		</script>
 	</head>
 	<body>
 
 		<i class="fa fa-user-circle" aria-hidden="true" style="position: absolute;font-size: 24px; top: 11px; left: 9px; z-index: 100;"></i>
-		<div class="swiper-container">
+		<div id="swiper" class="swiper-container">
 			<div class="swiper-wrapper">
-				<div class="swiper-slide">1</div>
+				<div class="swiper-slide"><img src="shop/img/pp-pdp-p7-splitblock1-lrg.jpg.large.1x.jpg" style="height: auto;width: auto;max-height: 100%;max-width: 100%;"/></div>
 				<div class="swiper-slide">2</div>
 				<div class="swiper-slide">3</div>
 			</div>
@@ -28,7 +38,7 @@
 				<div class="swiper-button-next"></div> -->
 		</div>
 
-		<script src="js/swiper.min.js"></script>
+		<script src="com_js/swiper.min.js"></script>
 		<script>
 			var mySwiper = new Swiper('.swiper-container', {
 				// direction: 'vertical', // 垂直切换选项
@@ -84,7 +94,7 @@
 									</div>
 									<div style="height: 109px; width: 100%; display: flex; flex-direction: column; justify-content: space-around;">
 										<h4>[[ item.name ]]</h4>
-										<div v-show="true"><span class="tag">满15减5</span></div>
+										<!-- <div v-show="true"><span class="tag">满15减5</span></div> -->
 										<div>
 											<p style="display: inline-block; width: 35%; line-height: 22px;">[[ '￥' + item.price ]]</p>
 											<div :class="{pop: true, mov: item.num>0}">
@@ -100,8 +110,9 @@
 								</li>
 							</ul>
 						</li>
-						<!-- 添加反馈入口 -->
-						<li>还想吃啥？告诉我</li>
+						
+						<!-- 页面跳转至反馈入口 -->
+						<li class="tellme">还想吃啥？告诉我<i class="fa fa-chevron-circle-right" aria-hidden="true" style="padding-left: 10px;color: #535455"></i></li>
 					</ul>
 				</div>
 			</div>
@@ -132,16 +143,15 @@
 			</div>
 
 			<div class="footer">
-				<div style="border: #007AFF 1px solid;">
-					<div style="border: #000000 1px solid;">
+					<div>
 						<i class="fa fa-shopping-cart" v-on:click="showShop()"></i>
+					</div>
 						<!--记录订单总数  -->
 						<div class="total" v-show="total>0">[[total]]</div>
-					</div>
-					<div style="border: #000000 1px solid">
-						<p>[[totalPrice]]</p>
-					</div>
-				</div>
+							<span class="totalPrice"><span style="font-size: 12px;">¥</span> [[totalPrice]]</span>
+							<span :class="{minPrice: totalPrice < 10, hidden:totalPrice >10 }">满10元起配送</span>
+					
+
 				<div :class="{pay: true, notPay: total==0}">去结算</div>
 			</div>
 			<!-- 蒙版 -->
@@ -176,142 +186,36 @@
 		</div>
 
 		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script src="js/vue.js"></script>
+		<script src="com_js/vue.js"></script>
+		<script src="shop/js/index.js"></script>
 		<script>
-			var app = new Vue({
-				el: '#app',
-				delimiters:['[[',']]'],
-				data: {
-					navs: {{ data_navs|safe }},
-					// shopList储存购物车 商品对象的数组
-					shopList: [],
-					selector: 0,
-					IsShowlist: false,
-					IsHidden: true,
-					goods: {{ data_goods|safe }},
-					total: 0, // 购买总量
-			
-				},
-				computed: {
-					totalPrice: function() {
-						let total = 0;
-						for (let i = 0; i < this.shopList.length; i++) {
-							total += this.shopList[i].price * this.shopList[i].num;
-						}
-						return total;
-					}
-				},
-			
-			
-				methods: {
-					// 点击右侧导航栏
-					toHash(item, index) {
-						this.selector = index;
-						window.location.hash = item;
-			
-						// 导航栏向上滚动相应距离，一个li的高度为54px
-						this.$refs.left.scrollTop = (index > 7 ? index - 7 : 0) * 38;
-					},
-					// 食品选购按钮
-					increase(index1, index2, event) {
-						
-						this.total++;
-						this.goods[index1].items[index2].num++;
-						//添加商品到购物车，购物车列表商品信息更新
-						if (this.goods[index1].items[index2].num == 1) {
-							this.shopList.push(this.goods[index1].items[index2]);
-						}
-			
-						// 小球动画 
-						var top = event.clientY, // 小球降落起点
-							left = event.clientX,
-							endTop = window.innerHeight - 30, // 小球降落终点
-							endLeft = 20;
-			
-						// // 小球到达起点
-						var outer = $('#points .pointPre').first().removeClass("pointPre").css({
-							left: left + 'px',
-							top: top + 'px'
-						});
-						var inner = outer.find(".point-inner");
-			
-						setTimeout(function() {
-							// 将jquery对象转换为DOM对象
-							outer[0].style.webkitTransform = 'translate3d(0,' + (endTop - top) + 'px,0)';
-							inner[0].style.webkitTransform = 'translate3d(' + (endLeft - left) + 'px,0,0)';
-			
-							// 小球运动完毕恢复到原点
-							setTimeout(function() {
-								outer.removeAttr("style").addClass("pointPre");
-								inner.removeAttr("style");
-							}, 1000); //这里的延迟值和小球的运动时间相关
-						}, 1);
-					},
-					reduce(index1, index2) {
-						if(this.goods[index1].items[index2].num>0){
-						this.total--;
-						this.goods[index1].items[index2].num--;
-						//添加商品到购物车，购物车列表商品信息更新 当前状态商品数量为1时删除，非1时数量减1
-						if (this.goods[index1].items[index2].num == 0) {
-							for (var i = 0; i < this.shopList.length; i++) {
-								if (this.shopList[i] == this.goods[index1].items[index2]) {
-									this.shopList.splice(i, 1);
-								}
-							}
-						}
-						}
-					},
-					//增加删减 在弹出框里操作
-					increaseInTab(index3){
-						this.shopList[index3].num++;
-						this.total++;
-					},
-					
-					reduceInTab(index3){
-						if(this.shopList[index3].num>0){
-							this.shopList[index3].num--;
-							this.total--;
-						}
-						if(this.shopList[index3].num == 0) {
-							this.shopList.splice(index3,1);
-						}
-					},
-					
-					// 右侧菜单滑动
-					listScroll() {
-						// 为了达到联动效果，右侧滑动则改变左侧导航栏样式
-						var titles = document.getElementsByClassName('goodTitle');
-						for (var i = 0; i < titles.length; i++) {
-							var style = titles[i].getBoundingClientRect();
-							if (style.top == 132) {
-								this.toHash(titles[i].innerHTML, i);
-							}
-						}
-					},
-					//显示购物车内商品信息
-					showShop() {
-						//当购物车内有商品的时候才能查看
-						if (this.total > 0) {
-							this.IsShowlist = !this.IsShowlist;
-							this.IsHidden = !this.IsHidden;
-						}
-					},
-					//返回显示首页
-					showIndex(){
-						this.IsShowlist = !this.IsShowlist;
-						this.IsHidden = !this.IsHidden;
-					},
-					
-					//清空
-					clearAll(){
-						// alert(this.shopList.length);
-						this.shopList.splice(0,this.shopList.length);
-						this.total=0;
-					}
-				}
-			});
+			app.$data.navs = {{ data_navs|safe }};
+			app.$data.goods = {{ data_goods|safe }};
 		</script>
-		<!-- <script src="./js/index.js"></script> -->
+		<script>
+			for (var i = 0; i < localStorage.length; i++) {
+				//获取本地储存的key
+				var key = localStorage.key(i);
+				var good = localStorage.getItem(key);
+				good = JSON.parse(good);
+				// console.log(good);
+				app.$data.shopList.push(good);
+				console.log(app.$data.goods.length);
+				console.log(good.type);
+				//修改商品对象
+				// for(var j= 0;  j<app.$data.goods.length ;j++ ){
+				// 	if(app.$data.goods[j].title == good.type){
+				// 		for(var k=0; k<app.$data.goods[j].items.length ;k++){
+				// 			// console.log("当前数组长度为："+app.$data.goods[j])
+				// 			if(key == app.$data.goods[j].items[k].name){
+				// 				app.$data.goods[j].items[k].num = good.num;
+				// 			}
+				// 		}
+				// 	}
+				// }
+				
+			}
+		</script>
 
 	</body>
 </html>

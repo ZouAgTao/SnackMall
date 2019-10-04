@@ -1,349 +1,412 @@
 var app = new Vue({
 	el: '#app',
-	delimiters:['[[',']]'],
+	delimiters: ['[[', ']]'],
 	data: {
-		navs: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'],
+		navs: ['早餐大礼包', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'],
 		// shopList储存购物车 商品对象的数组
 		shopList: [],
 		selector: 0,
 		IsShowlist: false,
 		IsHidden: true,
+		// totalPrice :0,
 		goods: [{
 				title: 'A',
 				items: [{
-						src: "img/1.jpg",
+						src: "shop/img/1.jpg",
 						name: 'XXXXXXXXXXXXXXXXXXXXXXXXXXLLL',
-						price: 1,
+						price: 1.11,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'A'
 					},
 					{
-						src: "img/2.jpg",
+						src: "shop/img/2.jpg",
 						name: 'Beats Studio3',
 						price: 1999,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'A'
 					},
 					{
-						src: "img/3.jpg",
+						src: "shop/img/3.jpg",
 						name: 'Beats urb',
 						price: 2499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'A'
 					}
 				]
 			},
 			{
 				title: 'B',
 				items: [{
-						src: "img/1.jpg",
+						src: "shop/img/1.jpg",
 						name: 'Beats Solo3',
 						price: 1499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'B'
 					},
 					{
-						src: "img/2.jpg",
+						src: "shop/img/2.jpg",
 						name: 'Beats Studio3',
 						price: 1999,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'B'
 					},
 					{
-						src: "img/3.jpg",
+						src: "shop/img/3.jpg",
 						name: 'Beats urb',
 						price: 2499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'B'
 					}
 				]
 			},
 			{
 				title: 'C',
 				items: [{
-						src: "img/1.jpg",
+						src: "shop/img/1.jpg",
 						name: 'Beats Solo3',
 						price: 1499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'C'
 					},
 					{
-						src: "img/2.jpg",
+						src: "shop/img/2.jpg",
 						name: 'Beats Studio3',
 						price: 1999,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'C'
 					},
 					{
-						src: "img/3.jpg",
+						src: "shop/img/3.jpg",
 						name: 'Beats urb',
 						price: 2499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'C'
 					}
 				]
 			},
 			{
 				title: 'D',
 				items: [{
-						src: "img/1.jpg",
+						src: "shop/img/1.jpg",
 						name: 'Beats Solo3',
 						price: 1499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'D'
 					},
 					{
-						src: "img/2.jpg",
+						src: "shop/img/2.jpg",
 						name: 'Beats Studio3',
 						price: 1999,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'D'
 					},
 					{
-						src: "img/3.jpg",
+						src: "shop/img/3.jpg",
 						name: 'Beats urb',
 						price: 2499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'D'
 					}
 				]
 			},
 			{
 				title: 'E',
 				items: [{
-						src: "img/1.jpg",
+						src: "shop/img/1.jpg",
 						name: 'Beats Solo3',
 						price: 1499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'E'
 					},
 					{
-						src: "img/2.jpg",
+						src: "shop/img/2.jpg",
 						name: 'Beats Studio3',
 						price: 1999,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'E'
 					},
 					{
-						src: "img/3.jpg",
+						src: "shop/img/3.jpg",
 						name: 'Beats urb',
 						price: 2499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'E'
 					}
 				]
 			},
 			{
 				title: 'F',
 				items: [{
-						src: "img/1.jpg",
+						src: "shop/img/1.jpg",
 						name: 'Beats Solo3',
 						price: 1499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'F'
 					},
 					{
-						src: "img/2.jpg",
+						src: "shop/img/2.jpg",
 						name: 'Beats Studio3',
 						price: 1999,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'F'
 					},
 					{
-						src: "img/3.jpg",
+						src: "shop/img/3.jpg",
 						name: 'Beats urb',
 						price: 2499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'F'
 					}
 				]
 			},
 			{
 				title: 'G',
 				items: [{
-						src: "img/1.jpg",
+						src: "shop/img/1.jpg",
 						name: 'Beats Solo3',
 						price: 1499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'G'
 					},
 					{
-						src: "img/2.jpg",
+						src: "shop/img/2.jpg",
 						name: 'Beats Studio3',
 						price: 1999,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'G'
 					},
 					{
-						src: "img/3.jpg",
+						src: "shop/img/3.jpg",
 						name: 'Beats urb',
 						price: 2499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'G'
 					}
 				]
 			},
 			{
 				title: 'H',
 				items: [{
-						src: "img/1.jpg",
+						src: "shop/img/1.jpg",
 						name: 'Beats Solo3',
 						price: 1499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'H'
 					},
 					{
-						src: "img/2.jpg",
+						src: "shop/img/2.jpg",
 						name: 'Beats Studio3',
 						price: 1999,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'H'
 					},
 					{
-						src: "img/3.jpg",
+						src: "shop/img/3.jpg",
 						name: 'Beats urb',
 						price: 2499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'H'
 					}
 				]
 			},
 			{
 				title: 'I',
 				items: [{
-						src: "img/1.jpg",
+						src: "shop/img/1.jpg",
 						name: 'Beats Solo3',
 						price: 1499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'I'
 					},
 					{
-						src: "img/2.jpg",
+						src: "shop/img/2.jpg",
 						name: 'Beats Studio3',
 						price: 1999,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'I'
 					},
 					{
-						src: "img/3.jpg",
+						src: "shop/img/3.jpg",
 						name: 'Beats urb',
 						price: 2499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'I'
 					}
 				]
 			},
 			{
 				title: 'J',
 				items: [{
-						src: "img/1.jpg",
+						src: "shop/img/1.jpg",
 						name: 'Beats Solo3',
 						price: 1499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'J'
 					},
 					{
-						src: "img/2.jpg",
+						src: "shop/img/2.jpg",
 						name: 'Beats Studio3',
 						price: 1999,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'J'
 					},
 					{
-						src: "img/3.jpg",
+						src: "shop/img/3.jpg",
 						name: 'Beats urb',
 						price: 2499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'J'
 					}
 				]
 			},
 			{
 				title: 'K',
 				items: [{
-						src: "img/1.jpg",
+						src: "shop/img/1.jpg",
 						name: 'Beats Solo3',
 						price: 1499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'K'
 					},
 					{
-						src: "img/2.jpg",
+						src: "shop/img/2.jpg",
 						name: 'Beats Studio3',
 						price: 1999,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'K'
 					},
 					{
-						src: "img/3.jpg",
+						src: "shop/img/3.jpg",
 						name: 'Beats urb',
 						price: 2499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'K'
 					}
 				]
 			},
 			{
 				title: 'L',
 				items: [{
-						src: "img/1.jpg",
+						src: "shop/img/1.jpg",
 						name: 'Beats Solo3',
 						price: 1499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'L'
 					},
 					{
-						src: "img/2.jpg",
+						src: "shop/img/2.jpg",
 						name: 'Beats Studio3',
 						price: 1999,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'L'
 					},
 					{
-						src: "img/3.jpg",
+						src: "shop/img/3.jpg",
 						name: 'Beats urb',
 						price: 2499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'L'
 					}
 				]
 			},
 			{
 				title: 'M',
 				items: [{
-						src: "img/1.jpg",
+						src: "shop/img/1.jpg",
 						name: 'Beats Solo3',
 						price: 1499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'M'
 					},
 					{
-						src: "img/2.jpg",
+						src: "shop/img/2.jpg",
 						name: 'Beats Studio3',
 						price: 1999,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'M'
 					},
 					{
-						src: "img/3.jpg",
+						src: "shop/img/3.jpg",
 						name: 'Beats urb',
 						price: 2499,
 						tag: '',
-						num: 0
+						num: 0,
+						type: 'M'
 					}
 				]
 			},
 		],
-		total: 0, // 购买总量
+		// total: 0, // 购买总量
 
 	},
 	computed: {
 		totalPrice: function() {
-			let total = 0;
+			let totalPrice = 0;
+			// for (var i = 0; i < localStorage.length; i++) {
+			// 	//获取本地储存的key
+			// 	let key = localStorage.key(i);
+			// 	let good = localStorage.getItem(key);
+			// 	good = JSON.parse(good);
+			// 	total += good.price * good.num ;
+			// }
+
 			for (let i = 0; i < this.shopList.length; i++) {
-				total += this.shopList[i].price * this.shopList[i].num;
+				totalPrice += this.shopList[i].price * this.shopList[i].num;
 			}
-			return total;
+			return totalPrice;
+		},
+
+		total: {
+			//getter
+			get: function() {
+				let total = 0;
+				for (let i = 0; i < this.shopList.length; i++) {
+					total += this.shopList[i].num;
+				}
+				return total;
+			},
+			set: function(newValue) {
+				total = 0;
+			}
+
 		}
 	},
 
@@ -357,15 +420,28 @@ var app = new Vue({
 			// 导航栏向上滚动相应距离，一个li的高度为54px
 			this.$refs.left.scrollTop = (index > 7 ? index - 7 : 0) * 38;
 		},
+
 		// 食品选购按钮
 		increase(index1, index2, event) {
-			
 			this.total++;
 			this.goods[index1].items[index2].num++;
+			//将该商品信息存入localStorage 
+			goodInfo = JSON.stringify(this.goods[index1].items[index2]);
+			localStorage.setItem(this.goods[index1].items[index2].name, goodInfo);
+			
 			//添加商品到购物车，购物车列表商品信息更新
 			if (this.goods[index1].items[index2].num == 1) {
 				this.shopList.push(this.goods[index1].items[index2]);
 			}
+			//选购按钮修改逻辑
+			// else{
+			// 	for(let i=0; i<this.shopList.length; i++){
+			// 		if(this.shopList[i].name ==this.goods[index1].items[index2].name){
+			// 			this.shopList[i].num = this.goods[index1].items[index2].num;
+			// 		}
+			// 	}
+			// }
+			
 
 			// 小球动画 
 			var top = event.clientY, // 小球降落起点
@@ -392,36 +468,63 @@ var app = new Vue({
 				}, 1000); //这里的延迟值和小球的运动时间相关
 			}, 1);
 		},
+
 		reduce(index1, index2) {
-			if(this.goods[index1].items[index2].num>0){
-			this.total--;
-			this.goods[index1].items[index2].num--;
-			//添加商品到购物车，购物车列表商品信息更新 当前状态商品数量为1时删除，非1时数量减1
-			if (this.goods[index1].items[index2].num == 0) {
-				for (var i = 0; i < this.shopList.length; i++) {
-					if (this.shopList[i] == this.goods[index1].items[index2]) {
-						this.shopList.splice(i, 1);
+			if (this.goods[index1].items[index2].num > 0) {
+				this.total--;
+				this.goods[index1].items[index2].num--;
+				//添加商品到购物车，购物车列表商品信息更新 当前状态商品数量为1时删除，非1时数量减1
+				if (this.goods[index1].items[index2].num == 0) {
+					for (var i = 0; i < this.shopList.length; i++) {
+						if (this.shopList[i] == this.goods[index1].items[index2]) {
+							this.shopList.splice(i, 1);
+						}
 					}
 				}
-			}
+				//选购按钮修改逻辑
+				// else{
+				// 	for(let i=0; i<this.shopList.length; i++){
+				// 		if(this.shopList[i].name ==this.goods[index1].items[index2].name){
+				// 			this.shopList[i].num = this.goods[index1].items[index2].num;
+				// 		}
+				// 	}
+				// }
+				//对localStorage进行操作
+				if (this.goods[index1].items[index2].num == 0) {
+					localStorage.removeItem(this.goods[index1].items[index2].name);
+				} else {
+					goodInfo = JSON.stringify(this.goods[index1].items[index2]);
+					localStorage.setItem(this.goods[index1].items[index2].name, goodInfo);
+				}
+
 			}
 		},
+
 		//增加删减 在弹出框里操作
-		increaseInTab(index3){
+		increaseInTab(index3) {
 			this.shopList[index3].num++;
 			this.total++;
+			//对localStorage进行操作
+			goodInfo = JSON.stringify( this.shopList[index3] );
+			localStorage.setItem(this.shopList[index3].name, goodInfo);
+			
 		},
-		
-		reduceInTab(index3){
-			if(this.shopList[index3].num>0){
+
+		reduceInTab(index3) {
+			if (this.shopList[index3].num > 0) {
 				this.shopList[index3].num--;
 				this.total--;
+				//对localStorage操作
+				goodInfo = JSON.stringify( this.shopList[index3] );
+				localStorage.setItem(this.shopList[index3].name, goodInfo);
 			}
-			if(this.shopList[index3].num == 0) {
-				this.shopList.splice(index3,1);
+			if (this.shopList[index3].num == 0) {
+				//对localStorage操作
+				localStorage.removeItem(this.shopList[index3].name);
+				this.shopList.splice(index3, 1);
 			}
 		},
-		
+
 		// 右侧菜单滑动
 		listScroll() {
 			// 为了达到联动效果，右侧滑动则改变左侧导航栏样式
@@ -442,16 +545,35 @@ var app = new Vue({
 			}
 		},
 		//返回显示首页
-		showIndex(){
+		showIndex() {
 			this.IsShowlist = !this.IsShowlist;
 			this.IsHidden = !this.IsHidden;
 		},
-		
+
 		//清空
-		clearAll(){
+		clearAll() {
 			// alert(this.shopList.length);
-			this.shopList.splice(0,this.shopList.length);
-			this.total=0;
-		}
+			//清除对应商品的勾选数量
+			this.shopList.splice(0, this.shopList.length);
+			this.total = 0;
+			localStorage.clear();
+		},
+
+		// 计算总价格
+		// returnPrice(){
+		// 	for (var i = 0; i < localStorage.length; i++) {
+		// 		//获取本地储存的key
+		// 		let key = localStorage.key(i);
+		// 		let good = localStorage.getItem(key);
+		// 		good = JSON.parse(good);
+		// 		this.totalPrice += good.price * good.num ;
+		// 	}
+		// 	// for (let i = 0; i < this.shopList.length; i++) {
+		// 	// 	total += this.shopList[i].price * this.shopList[i].num;
+		// 	// }
+		// }
+		// 
+
+
 	}
 });

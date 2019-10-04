@@ -13,6 +13,7 @@ a {
     text-decoration: none;
     color: #000;
 } 
+
 header {
     height: 65px;
     line-height: 65px;
@@ -23,6 +24,9 @@ header {
     position: relative;
 }
 
+body{
+	font-size: 14px;
+}
 
 /* h4 {
     display: block;
@@ -36,6 +40,7 @@ header {
 .notice {
     height: 40px; 
 }
+
 .goods {
     display: flex;
     position: absolute;
@@ -64,6 +69,8 @@ header {
 	height: 38px;
 	line-height: 38px;
 	text-align: center;
+	font-size: 13px;
+	color: #535455;
 	/* border-bottom: 1px solid #ccc; */
 	box-sizing: border-box;
 }
@@ -81,6 +88,8 @@ header {
 	background-color: #FFFFFF;
 	position: sticky;
 	line-height: 30px;
+	color: #535455;
+	font-size: 12px;
 	top: 0;
 	z-index: 10;
 }
@@ -112,6 +121,7 @@ header {
 .good li .imgBox{
 	display: flex;
 	align-items: center;
+	margin-right: 10px;
 }
 
 
@@ -151,12 +161,25 @@ header {
 	border: 1px solid rgba(255, 137, 141, 0.38);
 }
 
+.tellme{
+	height: 41px;
+	line-height: 41px;
+	width: 256px;
+	border-radius: 20px;
+	background: #EEEEEE;
+	color: #535455;
+	text-align: center;
+	margin:25px auto 50px;
+	font-size: 16px ;
+	font-weight: 450;
+}
+
 /* 点击添加按钮缓慢弹出订单个数以及减少按钮 */
 .pop {
-    display: inline-block;
-    position: relative;
-    opacity: 0;
-    transition: all ease .5s;
+  display: inline-block;
+  position: relative;
+  opacity: 0;
+  transition: all ease .5s;
 	padding-left: 5px;
 	padding-right: 5px;
 }
@@ -185,13 +208,13 @@ header {
 
 
 .footer {
-    background-color: #555;
+    background-color: #FFD154;
     width: 100%;
     height: 46px;
-    line-height: 46px;
+    /* line-height: 46px; */
     bottom: 0;
     position: fixed;
-    font-size: 45px;
+    /* font-size: 45px; */
     padding-left: 10px;
     display: flex;
     justify-content: space-between;
@@ -201,7 +224,9 @@ header {
 
 .footer i {
     color: #fff;
+	font-size: 45px;
 }
+
 .footer .total {
     position: absolute;
     width: 20px;
@@ -215,15 +240,40 @@ header {
     background-color: orangered;
     font-size: 10px;
 }
+
+
+.footer .totalPrice{
+	color: #494949;
+	font-size: 18px;
+	font-height: bolder;
+	display: inline-block;
+	/* line-height: 1.25rem; */
+	position: absolute;
+	left: 90px;
+	top: 3px;
+}
+
+.minPrice{
+	position: absolute;
+	left: 88px;
+	top: 25px;
+	font-size: 12px;
+	color: #808080;
+}
+
+
+
 .pay {
+	line-height: 46px;
     /* background-color: rgb(78, 207, 45); */
-    background-color: #FFD154;
-    color: #000000;
+    background-color: #000000;
+    color: #FFFFFF;
     font-size: 18px;
     padding: 0 20px;
 }
 .notPay {
     background-color: #bbb;
+	line-height: 46px;
 }
 
 /* 运动小球 */
