@@ -1,3 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-# Create your views here.
+def order_detail(request):
+    return render(request, 'info/order_detail.html')

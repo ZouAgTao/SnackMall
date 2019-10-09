@@ -4,7 +4,10 @@ var app = new Vue({
 	data: {
 		navs: ['早餐大礼包', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'],
 		// shopList储存购物车 商品对象的数组
-		shopList: [],
+		shopList: {
+			list: [],
+			sum: 0,
+		},
 		selector: 0,
 		IsShowlist: false,
 		IsHidden: true,
@@ -22,7 +25,7 @@ var app = new Vue({
 					{
 						src: "shop/img/2.jpg",
 						name: 'Beats Studio3',
-						price: 1999,
+						price: 5.57,
 						tag: '',
 						num: 0,
 						type: 'A'
@@ -30,7 +33,7 @@ var app = new Vue({
 					{
 						src: "shop/img/3.jpg",
 						name: 'Beats urb',
-						price: 2499,
+						price: 3.34,
 						tag: '',
 						num: 0,
 						type: 'A'
@@ -380,26 +383,18 @@ var app = new Vue({
 	computed: {
 		totalPrice: function() {
 			let totalPrice = 0;
-			// for (var i = 0; i < localStorage.length; i++) {
-			// 	//获取本地储存的key
-			// 	let key = localStorage.key(i);
-			// 	let good = localStorage.getItem(key);
-			// 	good = JSON.parse(good);
-			// 	total += good.price * good.num ;
-			// }
-
-			for (let i = 0; i < this.shopList.length; i++) {
-				totalPrice += this.shopList[i].price * this.shopList[i].num;
+			for (let i = 0; i < this.shopList.list.length; i++) {
+				totalPrice += printFn(this.shopList.list[i].price * this.shopList.list[i].num);
 			}
-			return totalPrice;
+			return totalPrice.toFixed(2);
 		},
 
 		total: {
 			//getter
 			get: function() {
 				let total = 0;
-				for (let i = 0; i < this.shopList.length; i++) {
-					total += this.shopList[i].num;
+				for (let i = 0; i < this.shopList.list.length; i++) {
+					total += this.shopList.list[i].num;
 				}
 				return total;
 			},
@@ -426,13 +421,25 @@ var app = new Vue({
 			this.total++;
 			this.goods[index1].items[index2].num++;
 			//将该商品信息存入localStorage 
-			goodInfo = JSON.stringify(this.goods[index1].items[index2]);
-			localStorage.setItem(this.goods[index1].items[index2].name, goodInfo);
-			
+			// goodInfo = JSON.stringify(this.goods[index1].items[index2]);
+			// localStorage.setItem(this.goods[index1].items[index2].name, goodInfo);
+
 			//添加商品到购物车，购物车列表商品信息更新
 			if (this.goods[index1].items[index2].num == 1) {
-				this.shopList.push(this.goods[index1].items[index2]);
+				this.shopList.list.push(this.goods[index1].items[index2]);
+			} else {
+				for (let i = 0; i < this.shopList.list.length; i++) {
+					if (this.shopList.list[i].name == this.goods[index1].items[index2].name) {
+						this.shopList.list[i].num = this.goods[index1].items[index2].num;
+					}
+				}
 			}
+			//将购物车放入localStorage中储存（新）
+			this.shopList.sum = this.totalPrice;
+			shopList_info = JSON.stringify(this.shopList);
+			localStorage.setItem('shopList', shopList_info);
+
+
 			//选购按钮修改逻辑
 			// else{
 			// 	for(let i=0; i<this.shopList.length; i++){
@@ -441,7 +448,7 @@ var app = new Vue({
 			// 		}
 			// 	}
 			// }
-			
+
 
 			// 小球动画 
 			var top = event.clientY, // 小球降落起点
@@ -475,54 +482,69 @@ var app = new Vue({
 				this.goods[index1].items[index2].num--;
 				//添加商品到购物车，购物车列表商品信息更新 当前状态商品数量为1时删除，非1时数量减1
 				if (this.goods[index1].items[index2].num == 0) {
-					for (var i = 0; i < this.shopList.length; i++) {
-						if (this.shopList[i] == this.goods[index1].items[index2]) {
-							this.shopList.splice(i, 1);
+					for (var i = 0; i < this.shopList.list.length; i++) {
+						if (this.shopList.list[i].name == this.goods[index1].items[index2].name) {
+							this.shopList.list.splice(i, 1);
 						}
 					}
 				}
-				//选购按钮修改逻辑
-				// else{
-				// 	for(let i=0; i<this.shopList.length; i++){
-				// 		if(this.shopList[i].name ==this.goods[index1].items[index2].name){
-				// 			this.shopList[i].num = this.goods[index1].items[index2].num;
-				// 		}
-				// 	}
-				// }
-				//对localStorage进行操作
-				if (this.goods[index1].items[index2].num == 0) {
-					localStorage.removeItem(this.goods[index1].items[index2].name);
-				} else {
-					goodInfo = JSON.stringify(this.goods[index1].items[index2]);
-					localStorage.setItem(this.goods[index1].items[index2].name, goodInfo);
+				// 选购按钮修改逻辑
+				else {
+					for (var i = 0; i < this.shopList.list.length; i++) {
+						if (this.shopList.list[i].name == this.goods[index1].items[index2].name) {
+							this.shopList.list[i].num = this.goods[index1].items[index2].num;
+						}
+					}
 				}
+
+
+				//对localStorage进行操作
+				// if (this.goods[index1].items[index2].num == 0) {
+				// 	localStorage.removeItem(this.goods[index1].items[index2].name);
+				// } else {
+				// 	goodInfo = JSON.stringify(this.goods[index1].items[index2]);
+				// 	localStorage.setItem(this.goods[index1].items[index2].name, goodInfo);
+				// }
+					this.shopList.sum = this.totalPrice;
+					shopList_info = JSON.stringify(this.shopList);
+					localStorage.setItem('shopList', shopList_info);
 
 			}
 		},
 
 		//增加删减 在弹出框里操作
 		increaseInTab(index3) {
-			this.shopList[index3].num++;
+			this.shopList.list[index3].num++;
 			this.total++;
 			//对localStorage进行操作
-			goodInfo = JSON.stringify( this.shopList[index3] );
-			localStorage.setItem(this.shopList[index3].name, goodInfo);
+			// goodInfo = JSON.stringify( this.shopList[index3] );
+			// localStorage.setItem(this.shopList[index3].name, goodInfo);
 			
+			this.shopList.sum = this.totalPrice;
+			shopList_info = JSON.stringify(this.shopList);
+			localStorage.setItem('shopList', shopList_info);
+			
+
 		},
 
 		reduceInTab(index3) {
-			if (this.shopList[index3].num > 0) {
-				this.shopList[index3].num--;
+			if (this.shopList.list[index3].num > 0) {
+				this.shopList.list[index3].num--;
 				this.total--;
 				//对localStorage操作
-				goodInfo = JSON.stringify( this.shopList[index3] );
-				localStorage.setItem(this.shopList[index3].name, goodInfo);
+				// goodInfo = JSON.stringify( this.shopList[index3] );
+				// localStorage.setItem(this.shopList[index3].name, goodInfo);
 			}
-			if (this.shopList[index3].num == 0) {
+			if (this.shopList.list[index3].num == 0) {
 				//对localStorage操作
-				localStorage.removeItem(this.shopList[index3].name);
-				this.shopList.splice(index3, 1);
+				// localStorage.removeItem(this.shopList[index3].name);
+				// this.shopList.splice(index3, 1);
 			}
+			
+			this.shopList.sum = this.totalPrice;
+			shopList_info = JSON.stringify(this.shopList);
+			localStorage.setItem('shopList', shopList_info);
+			
 		},
 
 		// 右侧菜单滑动
@@ -553,26 +575,18 @@ var app = new Vue({
 		//清空
 		clearAll() {
 			// alert(this.shopList.length);
-			//清除对应商品的勾选数量
-			this.shopList.splice(0, this.shopList.length);
+			//清除对应列表商品的勾选数量
+			for (var j = 0; j < app.$data.goods.length; j++) {
+				for(var i = 0; i< app.$data.goods[j].items.length ;i++){
+					app.$data.goods[j].items[i].num=0;
+				}
+			}
+			this.shopList.list.splice(0, this.shopList.list.length);
+			this.shopList.sum=0;
 			this.total = 0;
-			localStorage.clear();
+			shopList_info =JSON.stringify(this.shopList);
+			localStorage.setItem('shopList',shopList_info);
 		},
-
-		// 计算总价格
-		// returnPrice(){
-		// 	for (var i = 0; i < localStorage.length; i++) {
-		// 		//获取本地储存的key
-		// 		let key = localStorage.key(i);
-		// 		let good = localStorage.getItem(key);
-		// 		good = JSON.parse(good);
-		// 		this.totalPrice += good.price * good.num ;
-		// 	}
-		// 	// for (let i = 0; i < this.shopList.length; i++) {
-		// 	// 	total += this.shopList[i].price * this.shopList[i].num;
-		// 	// }
-		// }
-		// 
 
 
 	}

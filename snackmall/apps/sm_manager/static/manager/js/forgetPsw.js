@@ -3,7 +3,7 @@ var hd =new Vue({
 	methods:{
 		//返回按钮
 		returnTo(){
-			window.location.href = "login.html"
+			window.history.back();
 		}
 	}
 })

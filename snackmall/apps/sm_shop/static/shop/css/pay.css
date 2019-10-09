@@ -21,6 +21,23 @@ body {
 	font-size: 14px;
 }
 
+.head {
+	padding-top: 0;
+	box-sizing: content-box;
+	height: 5%;
+	background-color: rgb(248, 248, 248, 1);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.title {
+	display: inline-block;
+	text-align: center;
+}
+
+
+
 #app {
 	width: 100%;
 	height: 100%;
@@ -184,13 +201,24 @@ body {
 	border-radius: 10px;
 	/* box-shadow: 0px 0px 2px 0px rgba(170, 170, 170, 1); */
 	background-color: #FFFFFF;
-	padding:0 10px 10px 10px;
+	padding:0 10px 20px 10px;
 }
 
 .pay-method-card{
 	display: flex;
 	justify-content: space-between;
 }
+
+.pickTime{
+	border: none;
+	outline: none;
+	background: none;
+	font-size: 14px;
+	padding: 10px;
+
+}
+
+
 
 
 .footer {
@@ -208,15 +236,38 @@ body {
 	z-index: 13;
 }
 
-.footer-pay {
+.footer .totalPrice{
+	font-size: 16px;
+}
+
+.footer .sum{
+	color: #FBB61C;
+	font-size: 16px;
+}
+
+.footer_pay {
 	width: 92px;
 	line-height: 46px;
-	background-color: rgba(255, 152, 0, 1);
-	color: rgba(0, 0, 0, 1);
+	background-color: #FBB61C;
+	color: #000000;
 	text-align: center;
+	font-size: 16px;
 	/* border: 1px solid rgba(187, 187, 187, 1); */
+}
+
+.footer_pay_disable{
+	width: 92px;
+	line-height: 46px;
+	background-color: #FFECB7;
+	color: #FFFFFF;
+	text-align: center;
+	font-size: 16px;
 }
 
 .hidden{
 	display: none;
+}
+
+.jzshow{
+	display: flex; align-items: center;justify-content: space-between;
 }

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<base href="/static/" />
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link href="com_css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="info/css/order_detail.css" type="text/css" rel="stylesheet" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/5.1.0/math.js"></script>
+		<script>
+			//引入math.js 解决js计算精度问题 ,该方法要在index.js加载前进行加载
+			function printFn(value) {
+			    const precision = 14
+			    return Number(math.format(value, precision))
+			}
+		</script>
+		<title>订单详情</title>
+	</head>
+	<body>
+		<div id="app">
+			<div id="hd">
+				<div class="head">
+					<i class="fa fa-angle-left" style="font-size: 1.75rem; padding:10px ;" @click="returnTo()"></i>
+					<span class="title">订单详情</span>
+					<span> </span>
+				</div>
+			</div>
+
+			<div id="bd">
+				<!-- 订单状态 -->
+				<div class="order-state">
+					<h2>订单[[ order.status]]</h2>
+				</div>
+				<!-- 商品信息 -->
+				<div class="goods-list">
+					<div class="goods-list-header">
+						<p>已选商品（[[total]]）</p>
+					</div>
+					<div class="goods-list-card">
+						<ul>
+							<li v-for="(item,index) in order.shopList.list" :key="index">
+								<div class="imgBox">
+									<img :src=" item.src " />
+								</div>
+								<div class="goodInfo">
+									<h4>[[ item.name ]]</h4>
+									<p>×[[ item.num ]]</p>
+								</div>
+								<div class="goodPrice">
+									<span class="price">¥ [[(item.price * item.num).toFixed(2) ]]</span>
+								</div>
+							</li>
+						</ul>
+						<div class="goods-list-footer"><span>共[[total]]件商品</span><span style="font-size: 15px; padding-left: 15px;"> 合计：¥ [[order.shopList.sum]]</span></div>
+						
+					</div>
+				</div>
+				<div class="order-info">
+					<div class="order-info-header">
+						<p>订单信息</p>
+					</div>
+					<div class="order-info-list">
+						<div class="order-info-line">
+							<span class="info_name">订单编号：</span><span>[[order.id]]</span>
+						</div>
+						<div class="order-info-line">
+							<span class="info_name">收货地址：</span>
+							<span>
+								[['学生宿舍'+ order.recv_info.recv_location.building+order.recv_info.recv_location.dormi_num ]]<br>
+								[[order.recv_info.recv_name]]&nbsp;&nbsp;&nbsp;[[order.recv_info.recv_phone]]
+							</span>
+						</div>
+						<div class="order-info-line">
+							<span class="info_name">配送方式：</span><span v-show="order.recv_method">送货上门</span> <span v-show="!order.recv_method">自提</span>
+						</div>
+						<div class="order-info-line" v-show="!order.recv_method">
+							<span class="info_name">自提时间</span><span>[[order.recv_info.time]]</span>
+						</div>
+						<div class="order-info-line">
+							<span class="info_name">下单时间：</span><span>[[order.dt]]</span>
+						</div>
+					</div>
+					<div style="display: flex; justify-content: flex-end;">
+						<div :class="{cancel_button: order.status=='已接单',hidden: order.status!='已接单'}" @click="cancel_order()">取消订单</div>
+					</div>
+				</div>
+				
+				
+				
+			</div>
+
+
+		</div>
+		
+		<script src="com_js/vue.js"></script>
+		<script src="info/js/order_detail.js"></script>
+		<script>
+			//初始化计算商品数量
+			for(let i=0; i<app.$data.order.shopList.list.length; i++){
+				app.$data.total +=app.$data.order.shopList.list[i].num;
+			}
+		</script>
+
+	</body>
+</html>

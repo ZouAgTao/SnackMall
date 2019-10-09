@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.gzip import gzip_page
 from django.views.decorators.cache import cache_page
 
@@ -28,11 +28,13 @@ def index(request):
         for i_item in items:
             item = {}
 
+            item['id'] = i_item.id
             item['src'] = 'com_img/goods/' + i_item.image
             item['name'] = i_item.name
             item['price'] = float(i_item.price)
             item['tag'] = '' #【debug】初版没有tag
             item['num'] = 0
+            item['type'] = t_type.name
 
             good_item.append(item)
 
@@ -44,5 +46,117 @@ def index(request):
     })
 
 def check_user(request):
-    from django.http import HttpResponse
-    return HttpResponse('用户认证')
+    ss_user = request.session.get('user', None)
+    if ss_user:
+        #【debug】用户已登陆的话则进入用户个人信息页
+        from django.http import HttpResponse
+        return HttpResponse('用户已经登陆【%s】'%(str(ss_user)))
+    else:
+        return redirect('/auth/login/')
+
+def pay(request):
+    user_id = request.session.get('user', None)
+    if not user_id:
+        return redirect('/auth/login/')
+
+    from apps.sm_auth.models import User
+    users = User.objects.filter(id=str(user_id))
+    if len(users) == 0:
+        return redirect('/auth/login/')
+
+    recv_infos = users[0].recv_infos
+    recv_infos = json.loads(recv_infos)
+
+    recv_name = ''
+    recv_phone = ''
+    dormi = ''
+    building = ''
+
+    for recv_info in recv_infos['recv_infos']:
+        if recv_info['default']:
+            recv_name = recv_info['recv_name']
+            recv_phone = recv_info['recv_phone']
+            dormi = recv_info['recv_localtion']['dormi']
+            building = recv_info['recv_localtion']['building']
+            break
+
+    recv_infos_json = {
+        'recv_name' : recv_name,
+        'recv_phone' : recv_phone,
+        'recv_location' : {
+            'dormi_num' : dormi,
+            'building' : building
+        }
+    }
+
+    recv_infos_json = json.dumps(recv_infos_json)
+
+    data_context = {
+        'data_recv_infos' : recv_infos_json
+    }
+
+    return render(request, 'shop/pay.html', context=data_context)
+
+def check_pay(request):
+    user_id = request.session.get('user', None)
+
+    if not user_id:
+        return redirect('/auth/login/')
+
+    recv_method = request.POST.get('recv_method', None)
+    recv_info = request.POST.get('recv_info', None)
+    pick_time = request.POST.get('pick_time', None)
+    goods = request.POST.get('goods', None)
+
+    if not (recv_method and recv_info and pick_time and goods):
+        return redirect('/')
+
+    from apps.sm_info.models import Table
+    import datetime
+    import random
+
+    now_datetime = datetime.datetime.now()
+    dt_arr = []
+    dt_arr.append(str(now_datetime.year))
+    dt_arr.append(str(now_datetime.month))
+    dt_arr.append(str(now_datetime.day))
+    dt_arr.append(str(now_datetime.hour))
+    dt_arr.append(str(now_datetime.minute))
+    dt_arr.append(str(now_datetime.second))
+
+    for i in range(len(dt_arr)):
+        if len(dt_arr[i]) == 1:
+            dt_arr[i] = '0' + dt_arr[i]
+
+    id = ''.join(dt_arr) + user_id[-4:] + random.randint(1000,9999)
+    dt = now_datetime
+    status = 'A'
+
+    real_recv_info = ''
+    if recv_method:
+        real_recv_info = json.dumps(recv_info)
+    else:
+        real_recv_info = {
+            'recv_info' : {
+                'time' : str(pick_time)
+            }
+        }
+        real_recv_info = json.dumps(real_recv_info)
+
+    # 写入订单数据库
+    Table.objects.create(
+        id = id,
+        dt = dt,
+        user_id = str(user_id),
+        status = status,
+        recv_method = bool(recv_method),
+        recv_info = real_recv_info,
+        goods = json.dumps(goods)
+    )
+
+    # 【debug】加入过期列表
+
+    # 【debug】提醒卖家端
+
+    # 跳转到订单页
+    return redirect('/info/order_detail/')

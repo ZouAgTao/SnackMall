@@ -1,17 +1,29 @@
+
 var app = new Vue({
 	el:'#app',
 	delimiters:['[[',']]'],
 	data:{
-		shopList : [],
-		hh:'jj',
+		shopList: {
+			list: [],
+			sum: null,
+		},
 		isDelivery : true,
 		isDoor : false,
 		isLogin: true,
-		RecvInfoC:{
+		pickTime: null,
+		RecvInfoC_DL:{
 			recv_name : '蒋哲',
-			recv_phone: 13068640035,
-			recv_location: '学生宿舍A栋210',
+			recv_phone: '13068640035',
+			recv_location: {
+				dormi_num: '210',
+				building: 'A栋',
+			}
 		},
+		
+		RecvInfoC_DO:{
+			time : null,
+		},
+		
 		RecvInfoB:{
 			recv_name : 'HJL',
 			recv_phone: 13068640035,
@@ -19,26 +31,67 @@ var app = new Vue({
 		},
 	},
 	computed:{
-		totalPrice:function(){
-			let totalPrice =0 ;
-			for(let i=0 ;i<this.shopList.length ;i++){
-				totalPrice +=this.shopList[i].num *this.shopList[i].price;
-			}
-			return totalPrice;
-		},
 		total:function(){
 			let totalNum =0 ;
-			for(let i=0 ;i<this.shopList.length ;i++){
-				totalNum+=this.shopList[i].num;
+			for(let i=0 ;i<this.shopList.list.length ;i++){
+				totalNum+=this.shopList.list[i].num;
 			}
 			return totalNum;
 		}
 	},
 	methods:{
+		address_list()
+		{
+			window.location.href='/manager/address_list/';
+		},
+		
+		add_address()
+		{
+			window.location.href='/manager/add_address//pay/';
+		},
+		
 		switchDeli(){
 			this.isDelivery = !this.isDelivery;
 			this.isDoor = !this.isDoor;
-		}
+		},
+		
+		submit_order(){
+			//订单核查?是否需要
+			
+			//获取送货方式，true 为送货上门 false为自提
+			document.getElementById("recv_method").value = this.isDelivery;
+			// console.log("当前收货方式为："+document.getElementById("recv_method").value);
+			//获取当前提交订单的时间
+			var date =new Date();
+			var seperator1 = "-";
+			var seperator2 = ":";
+			var month = date.getMonth() + 1<10? "0"+(date.getMonth() + 1):date.getMonth() + 1;
+			var strDate = date.getDate()<10? "0" + date.getDate():date.getDate();
+			var currentdate = date.getFullYear() + seperator1  + month  + seperator1  + strDate
+			+ " "  + date.getHours()  + seperator2  + date.getMinutes()
+			+ seperator2 + date.getSeconds();
+			document.getElementById("dt").value = currentdate;
+			// console.log("当前时间为："+document.getElementById("dt").value);
+			//收货信息/自提时间 转json 字符串
+			if(this.isDelivery){
+				var json_RecvInfo = JSON.stringify(this.RecvInfoC_DL);
+				document.getElementById("recv_info").value = json_RecvInfo;
+				// console.log("当前收货地址："+document.getElementById("recv_info").value);
+			}else{
+				document.getElementById("pick_time").value = this.RecvInfoC_DO.time;
+				// console.log("上门自提时间："+document.getElementById("pick_time").value);
+			}
+			//商品信息
+			var json_goods = JSON.stringify(this.shopList);
+			document.getElementById("goods").value = json_goods;
+			// console.log("当前商品信息："+document.getElementById("goods").value);
+			
+			document.getElementById("order_form").submit();
+		},
+		
+		returnTo(){
+			window.history.back();
+		},
 		
 	}
 	

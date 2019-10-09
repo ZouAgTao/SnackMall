@@ -6,11 +6,11 @@
 
 **项目名：**SnacksMall
 
-**版本号：**1.3.1
+**版本号：**1.5.5
 
 **建立日期：**2019-09-18><19:00:00
 
-**更新日期：**2019-09-28><10:27:00
+**更新日期：**2019-10-08><20:10:00
 
 ### 扩展信息
 
@@ -20,7 +20,7 @@
 
 #### 备注
 
-无
+需要在下一次会议进行再统一确认。
 
 ## [TABLE]类别
 
@@ -67,12 +67,10 @@ statistics : {
 | 名称          | 数据类型         | 描述                                             |
 | ------------- | ---------------- | :----------------------------------------------- |
 | id            | VarChar(11)      | 【*】用户的id，同时也是注册手机号                |
-| passwd        | VarChar(18)      | 【*】用户的密码，6~16为字符长度要求（字母+数字） |
+| passwd        | VarChar(18)      | 【*】用户的密码，8~16为字符长度要求（字母+数字） |
 | nick          | VarChar(30)      | 【*】用户的昵称或用户名，最长15个中文或30个字母  |
 | avator        | VarChar(len(id)) | 【*】用户的头像的图片的文件名                    |
-| recv_name     | VarChar(30)      | 用户的收货姓名                                   |
-| recv_phone    | VarChar(11)      | 用户的收货联系手机号                             |
-| recv_location | Text(JSON)       | 用户的收货地址                                   |
+| recv_infos    | Text(JSON)       | 用户的信息                                       |
 | psn_gender    | Boolean          | 用户的性别                                       |
 | psn_birthday  | DateTime         | 用户的生日                                       |
 | psn_flavor    | Enum{...}        | 用户的口味信息                                   |
@@ -100,15 +98,7 @@ statistics : {
 >
 > //默认是我们给的，后期迭代后变成可以上传
 >
-> 【recv_name】收货姓名（用于收货）
->
-> //默认为空
->
-> 【recv_phone】收货手机号（用于收货）
->
-> //默认为空
->
-> 【recv_location】收货地址（用于收货）
+> 【recv_infos】收货信息（用于收货）
 >
 > //默认为空
 >
@@ -170,26 +160,35 @@ used_time : {
 >
 > 【sec】秒数(0<=min<=60) - Integer
 
-## [JSON]收货地址
+## [JSON]收货信息
 
 ```json
-recv_location : {
-	list : [
-        {
+recv_infos : [
+    {
+        id : (Integer),
+        'default' : (Boolean),
+        recv_name : (String),
+        recv_phone : (String),
+        recv_localtion : {
             dormi : (String),
             building : (String)
-        },
-        //...
-	],
-    num : (Integer)
-}
+        }
+    },
+    //...
+]
 ```
 
-> 【recv_location】收货地址列表 - Object
+> 【recv_infos】收货信息列表 - List
 >
-> 【list】收货地址列表 - List
+> 【id】收货信息的 index号码
 >
-> 【num】收货地址数量 - Integer
+> 【default】是否是默认收货地址 - Boolean
+>
+> 【recv_name】收货联系人姓名 - String
+>
+> 【recv_phone】收货联系人的手机号 - String
+>
+> 【recv_localtion】收货联系人地址（宿舍） - Object
 >
 > 【dormi】宿舍门牌号 - String
 >

@@ -1,15 +1,41 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<base href="./" />
+		<!-- <base href="./" /> -->
+		<base href="/static/" />
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<link href="com_css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href="auth/css/register.css" rel="stylesheet" type="text/css">
 		<title></title>
+		
+		<!-- 初始化 -->
+		<script>
+			function init()
+			{
+				var data_msg = {{ data_msg|safe }};
+				switch (data_msg)
+				{
+					case 0:
+						break;
+					
+					case 1:
+					alert('账号已经注册');
+						break;
+					
+					case 2:
+					alert('验证码错误');
+						break;
+					
+					default:
+						break;
+				}
+			}
+		</script>
+		
 	</head>
-	<body>
+	<body onload="init();">
 		<div id="page">
 			<div id="hd">
 				<div class="head">
@@ -19,14 +45,15 @@
 				</div>
 			</div>
 			<div id="bd">
-				<form action="#">
+				<form id="data_form" method="post" action="/auth/send_check_register/">
+					{% csrf_token %}
 					<div class="RegisterBox">
 						<div class="textbox">
-							<input type="text" name="id" placeholder="手机号" id="usn" v-model="usn" maxlength="11"/>
+							<input type="text" name="phone" placeholder="手机号" id="usn" v-model="usn" maxlength="11"/>
 						</div>
 						<hr style="margin: 0 20px; border-top: #F4F4F4;" />
 						<div class="textbox">
-							<input type="password" name="passwd" placeholder="密码 (长度不小于6位)" id="upw" v-model="upw"/>
+							<input type="password" name="password" placeholder="密码 (长度不小于6位)" id="upw" v-model="upw"/>
 							<i :class="{'fa fa-eye' : IsVisible,'fa fa-eye-slash' : IsHide }" aria-hidden="true" style="color: #555555;"
 							 @click="showPsw()"></i>
 						</div>

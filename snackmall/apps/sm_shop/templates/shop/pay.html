@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<base href="./" />
+		<base href="/static/" />
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>pay</title>
-		<meta name="viewport" content="width=device-width, user-scalable=no" />
 		<link href="com_css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" media="screen" href="shop/css/pay.css" />
-		<title></title>
 	</head>
 	<body>
 		<div id='app'>
+			<div id="hd">
+				<div class="head">
+					<i class="fa fa-angle-left" style="font-size: 1.75rem; padding:10px ;" @click="returnTo()"></i>
+					<span class="title">购物车</span>
+					<span></span>
+				</div>
+			</div>
 			<!-- 收获地址切换 -->
 			<div class="adress-card">
 				<div class="adress-card-switch">
@@ -20,28 +25,32 @@
 					<div :class="{switcherBlank : isDelivery,switcher :isDoor}" @click="switchDeli()">自提</div>
 				</div>
 				<div :class="{adress_card_add :isDelivery,hidden :isDoor}">
-					<div :class="{hidden :isLogin}">
-						<i class="fa fa-map-marker" aria-hidden="true" style="font-size: 18px;width: 20px;"></i><span>请添加收货地址</span><i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;width: 20px;"></i>
-					</div>
-					<div :class="{hidden : !isLogin,Delivery_login : isLogin}">
+					<div :class="{hidden : RecvInfoC_DL.recv_name != '',jzshow: RecvInfoC_DL.recv_name == ''}"  @click="add_address()">
 						<div>
-							<span class="recvInfo" style="font-weight: 600; font-size: 14px;">[[RecvInfoC.recv_location]]</span><br />
-							<span class="recvInfo">[[RecvInfoC.recv_name]]</span>
-							<span class="recvInfo">[[RecvInfoC.recv_phone]]</span>
+						<i class="fa fa-map-marker" aria-hidden="true" style="font-size: 18px;width: 20px;"></i><span>请添加收货地址</span >
+						</div>
+						<i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;width: 20px;"></i>
+					</div>
+					<div :class="{hidden : RecvInfoC_DL.recv_name == '',Delivery_login: RecvInfoC_DL.recv_name != ''}" @click="address_list()">
+						<div>
+							<span class="recvInfo" style="font-weight: 600; font-size: 14px;">学生宿舍[[RecvInfoC_DL.recv_location.building]][[RecvInfoC_DL.recv_location.dormi_num]]</span><br />
+							<!-- <span class="recvInfo" style="font-weight: 600; font-size: 14px;">[[RecvInfoC_DL.recv_location.building]][[RecvInfoC_DL.recv_location.dormi_num]]</span><br /> -->
+							<span class="recvInfo">[[RecvInfoC_DL.recv_name]]</span>
+							<span class="recvInfo">[[RecvInfoC_DL.recv_phone]]</span>
 						</div>
 						<div>
 							<i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;width: 20px;padding: 10px 0 10px 10px;"></i>
 						</div>
 					</div>
 				</div>
-				
+
 				<div :class="{adress_card_add :isDoor,hidden :isDelivery}">
 					<span class="recvInfo" style="font-weight: 600; font-size: 14px;">[[RecvInfoB.recv_location]]</span><br />
 					<span class="recvInfo">[[RecvInfoB.recv_name]]</span>
 					<span class="recvInfo">[[RecvInfoB.recv_phone]]</span>
 				</div>
 			</div>
-			
+
 			<!-- 已选商品卡片 -->
 			<div class="goods-list">
 				<div class="goods-list-header">
@@ -49,7 +58,7 @@
 				</div>
 				<div class="goods-list-card">
 					<ul>
-						<li v-for="(item,index) in shopList" :key="index">
+						<li v-for="(item,index) in shopList.list" :key="index">
 							<div class="imgBox">
 								<img :src=" item.src " />
 							</div>
@@ -58,7 +67,7 @@
 								<p>×[[ item.num ]]</p>
 							</div>
 							<div class="goodPrice">
-								<span class="price">[[ '￥' + item.price *item.num ]]</span>
+								<span class="price">￥[[(item.price *item.num).toFixed(2) ]]</span>
 							</div>
 						</li>
 					</ul>
@@ -80,24 +89,35 @@
 					提示：送货上门现场付款，仅支持支付宝和微信支付
 				</div>
 			</div>
-			
+
 			<div class="pay-method" v-show="!isDelivery">
 				<div class="goods-list-header">
-					<p>上门自提时间</p>
+					<p>自提时间备注（仅限当天）</p>
 				</div>
 				<div>
-					请填写预计取货时间：<input type="text" id="pickTime" name=""/>
+					<input type="text" id="pickTime" name="time" class="pickTime" placeholder="请填写预计取货时间" v-model="RecvInfoC_DO.time" />
 				</div>
-			</div>
-			
-			<div class="footer">
-				<div>
-					<span>合计：</span>
-					<span>[[totalPrice]]</span>
-				</div>
-				<div class="footer-pay">下单</div>
+				<!-- <hr style="margin: 0 10px; border-top: #F4F4F4;" /> -->
 			</div>
 
+			<form type="hidden" id="order_form" name="order_form" method="post" action="/check_pay/">
+				{% csrf_token %}
+				<input name="recv_method" type="hidden" id="recv_method" />
+				<input name="recv_info" type="hidden" id="recv_info" />
+				<input name="goods" type="hidden" id="goods" />
+				<input name="dt" type="hidden" id="dt" />
+				<input name="pick_time" type="hidden" id="pick_time" />
+
+
+				<div class="footer">
+					<div>
+						<span class="totalPrice">合计：</span>
+						<span style="font-size: 18px; color: #FBB61C;">¥</span><span class="sum">[[shopList.sum]]</span>
+					</div>
+					<div class="footer_pay" @click="submit_order" v-show="isDelivery">确认</div>
+					<div :class="{footer_pay:true, footer_pay_disable :RecvInfoC_DO.time == null  }" @click="submit_order" v-show="isDoor">确认</div>
+				</div>
+			</form>
 		</div>
 
 
@@ -106,14 +126,18 @@
 		<script src="com_js/vue.js"></script>
 		<script src="shop/js/pay.js"></script>
 		
+		<!-- 后端传输数据 -->
 		<script>
-			for (var i = 0; i < localStorage.length; i++) {
-				//获取本地储存的key
-				var key = localStorage.key(i);
-				var good = localStorage.getItem(key);
-				good = JSON.parse(good);
-				console.log(good);
-				app.$data.shopList.push(good);
+			app.$data.RecvInfoC_DL = {{ data_recv_infos|safe }};
+		</script>
+
+		<script>
+			var key = localStorage.key(0);
+			var shopList = localStorage.getItem(key);
+			shopList = JSON.parse(shopList);
+			app.$data.shopList.sum = shopList.sum;
+			for (var i = 0; i < shopList.list.length; i++) {
+				app.$data.shopList.list.push(shopList.list[i]);
 			}
 		</script>
 	</body>

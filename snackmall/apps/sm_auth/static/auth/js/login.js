@@ -10,7 +10,6 @@ var app =new Vue({
 		checkInfo() {
 			var regPhoneStr = /^1[0-9]{10}$/;
 			var regPswStr = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
-			alert("usn:" + this.usn + "upw:" + this.upw );
 			if (this.usn == null || this.upw == null ) {
 				alert("请填写信息");
 			} else if (!regPhoneStr.test(this.usn)) {
@@ -27,7 +26,7 @@ var app =new Vue({
 			}
 			//测试,注册成功
 			else {
-				document.getElementById("loginBtn").submit();
+				document.getElementById("data_form").submit();
 			}
 		
 		},

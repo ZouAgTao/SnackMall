@@ -3,7 +3,7 @@ var hd =new Vue({
 	methods:{
 		//返回按钮
 		returnTo(){
-			window.location.href = "login.html"
+			window.history.back();
 		}
 	}
 })
@@ -40,20 +40,29 @@ var app = new Vue({
 
 		//获得验证码函数
 		getCode() {
-			const TIME_COUNT = 60;
-			if (!this.timer) {
-				this.count = TIME_COUNT;
-				this.show = false;
-				this.timer = setInterval(() => {
-					if (this.count > 0 && this.count <= TIME_COUNT) {
-						this.count--;
-					} else {
-						this.show = true;
-						clearInterval(this.timer);
-						this.timer = null;
-					}
-				}, 1000)
+			if(!this.usn)
+			{
+				alert('请输入手机号')
+				return;
 			}
+			var request = new XMLHttpRequest();
+						request.open("GET","/auth/send_check_code/"+this.usn+"/");
+						request.send();
+						const TIME_COUNT = 60;
+						if (!this.timer) {
+							this.count = TIME_COUNT;
+							this.show = false;
+							this.timer = setInterval(() => {
+								if (this.count > 0 && this.count <= TIME_COUNT) {
+									this.count--;
+								} else {
+									this.show = true;
+									clearInterval(this.timer);
+									this.timer = null;
+								}
+							}, 1000)
+							}
+
 		},
 
 		//核查填入信息是否符合规范
@@ -61,7 +70,7 @@ var app = new Vue({
 			var regPhoneStr = /^1[0-9]{10}$/;
 			var regPswStr = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
 			var regCodeStr = /^\d{4}$/;
-			alert("usn:" + this.usn + "upw:" + this.upw + "code" + this.code);
+			
 			if (this.usn == null || this.upw == null || this.code == null) {
 				alert("请完善信息");
 			} else if (!regPhoneStr.test(this.usn)) {
@@ -82,15 +91,15 @@ var app = new Vue({
 			}
 			//测试,注册成功
 			else {
-				alert("注册成功");
-				document.getElementById("registerBtn").submit();
+				document.getElementById("data_form").submit();
 			}
 
 		},
 
 
 		toLogin() {
-			window.location.href = "login.html";
+			// window.location.href = "login.html";
+			window.history.back();
 		}
 
 	}
