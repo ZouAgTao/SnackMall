@@ -94,3 +94,7 @@ li{
 	align-items: center;
 	color: #BBBBBB;
 }
+
+.hidden{
+	display: none;
+}

@@ -42,7 +42,7 @@ var app = new Vue({
 	methods:{
 		address_list()
 		{
-			window.location.href='/manager/address_list/';
+			window.location.href='/manager/address_list_from_pay/';
 		},
 		
 		add_address()

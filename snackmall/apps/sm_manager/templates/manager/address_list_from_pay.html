@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<base href="/static/" />
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>我的收货地址</title>
+		<link href="manager/css/address_list_from_pay.css" type="text/css" rel="stylesheet" />
+		<link href="com_css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	</head>
+	<body>
+		<!-- {% csrf_token %} -->
+		<div id="app">
+			<div id="hd">
+				<div class="head">
+					<i class="fa fa-angle-left" style="font-size: 1.75rem; padding:10px ;" @click="returnTo()"></i>
+					<span class="title">我的收货地址</span>
+					<span></span>
+				</div>
+			</div>
+			<div id="bd">
+				<div class="address_card">
+					<ul>
+						<li v-for="(item,index) in recv_infos" :key="index"  @click="href_to(index)">
+							<div class="address_left">
+								<div class="select_box">
+									<div :class="{hidden : item.default == false}"><i class="fa fa-check-circle" aria-hidden="true" style="font-size: 20px; color: #FFD154;"></i></div>
+								</div>
+								<label class="address_info" for="select">
+									<span class="recv_name">[[item.recv_name]]</span> <span class="recv_phone">[[item.recv_phone]]</span><br />
+									<span>学生宿舍[[item.recv_localtion.building]][[item.recv_localtion.dormi]]</span>
+								</label>
+							</div>
+							<div class="address_right">
+								<span class="delete" @click.stop="delete_self(index)">删除</span>
+								<span @click.stop="edit_self(index)">编辑</span>
+							</div>
+						</li>
+					</ul>
+					<div class="add_address" @click="add_address()"><i class="fa fa-plus" aria-hidden="true"></i><span style="display: inline-block; padding-left: 20px;">添加新地址</span></div>
+				</div>
+			</div>
+
+		</div>
+
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="com_js/vue.js"></script>
+		<script src="manager/js/address_list_from_pay.js"></script>
+		<script>
+			data_temp = JSON.parse('{{ data_recv_infos|safe }}');
+			app.$data.recv_infos = data_temp;
+		</script>
+	</body>
+</html>

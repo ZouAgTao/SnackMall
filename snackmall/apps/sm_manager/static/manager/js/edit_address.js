@@ -3,10 +3,10 @@ var app =new Vue({
 	delimiters: ['[[', ']]'],
 	data:{
 		recv_info:{
-			is_default: false,
+			id :1,
 			recv_name: '蒋哲',
 			recv_phone: '13068640035',
-			recv_location:{
+			recv_localtion:{
 				building: 'H栋',
 				dormi: '210',
 			}
@@ -18,7 +18,7 @@ var app =new Vue({
 		confirm(){
 			//点击确认按钮，判断手机号是否填写正确
 			var regPhoneStr = /^1[0-9]{10}$/;
-			if(!regPhoneStr.test(this.recv_phone)){
+			if(!regPhoneStr.test(this.recv_info.recv_phone)){
 				alert("请填写正确的手机号");
 				return false;
 			}
@@ -31,5 +31,4 @@ var app =new Vue({
 			window.history.back();
 		}
 	},
-	
 })

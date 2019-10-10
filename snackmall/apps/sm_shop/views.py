@@ -48,9 +48,7 @@ def index(request):
 def check_user(request):
     ss_user = request.session.get('user', None)
     if ss_user:
-        #【debug】用户已登陆的话则进入用户个人信息页
-        from django.http import HttpResponse
-        return HttpResponse('用户已经登陆【%s】'%(str(ss_user)))
+        return redirect('/manager/user_home/')
     else:
         return redirect('/auth/login/')
 

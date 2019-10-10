@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<base href="/static/" />
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>个人中心</title>
+		<link href="manager/css/user_homepage.css" type="text/css" rel="stylesheet" />
+		<link href="com_css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	</head>
+	<body>
+		<div id="app">
+			<div id="hd">
+				<div class="head">
+					<i class="fa fa-angle-left" style="font-size: 1.75rem; padding:10px ;" @click="returnTo()"></i>
+					<span class="title">个人中心</span>
+					<span></span>
+				</div>
+			</div>
+			<div id="bd">
+				<!-- <div class="top" @click="to_userinfo()"> -->
+				<div class="top">
+					<div class="imgBox">
+						<img src="com_img/user3.png"  width="85px"/>
+					</div>
+					<div class="infoBox">
+						<span class="nick">{{ data_nickname }}</span>
+						<span class="remark">买点好吃的吧～</span>
+					</div>
+				</div>
+				
+				<div class="bottom">
+					<div class="bottom_row" @click="to_myorder()">
+						<div style="width: 10px; display: inline-block;">
+						<i class="fa fa-file-text" aria-hidden="true"></i>
+						</div>
+						<span>我的订单</span>
+					</div>
+					<!-- <div class="bottom_row" @click="to_">
+						<i class="fa fa-shield" aria-hidden="true"></i><span>修改密码</span>
+					</div> -->
+					<div class="bottom_row" @click="to_addresslist()">
+						<div style="width: 10px; display: inline-block;">
+						<i class="fa fa-map-marker" aria-hidden="true"></i>
+						</div>
+						<span>收货地址</span>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="com_js/vue.js"></script>
+		<script src="manager/js/user_homepage.js"></script>
+	</body>
+</html>

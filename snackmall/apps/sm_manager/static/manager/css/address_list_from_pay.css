@@ -3,12 +3,15 @@
 	margin: 0;
 }
 
-
 html,body {
 	background-color: #F4F4F4;
 	font-size: 14px;
 	color: #3E3E3E;
 	height: 100%;
+}
+
+li{
+	list-style: none;
 }
 
 
@@ -33,56 +36,65 @@ html,body {
 	max-width: 640px;
 	margin: 0 auto;
 	position: relative;
+
 }
 
-.top{
-	height: 120px;
+.address_card li{
+	padding: 15px 10px;
 	background-color: #FFFFFF;
+	display:flex ;
+	justify-content: space-between;
+}
+
+.address_left{
 	display: flex;
 	justify-content: flex-start;
+	width: 250px;
 }
 
-.imgBox{
-	/* border: #000000 1px solid; */
-	width: 120px;
+.select_box{
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	width: 40px;
+}
+.address_info{
+	line-height: 25px;
 }
 
-.infoBox{
-	/* border: red 1px solid; */
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-	padding: 5px 30px;
-}
-
-.nick{
+.recv_name{
+	font-size: 16px;
 	display: inline-block;
-	font-size: 24px;
-	font-weight: 500;
-	
+	padding-right: 10px;
 }
-
-.remark{
+.recv_phone{
+	font-size: 13px;
 	color: #A1A5AE;
-	font-weight: 400;
 }
 
-.bottom{
-	margin: 12px 0;
-	background-color: #FFFFFF;
+.address_right{
 	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
+	align-items: center;
+	color: #A1A5AE;
+	width: 89px;
+}
+.address_right span{
+	padding: 0 8px;
 }
 
-.bottom_row{
-	line-height: 47px;
-	margin: 0 30px;
-	border-bottom: #EEEEEE 1px solid;
+.delete{
+	border-right: #A1A5AE 1px solid;
 }
-.bottom_row span{
-	margin-left: 20px;
+
+.add_address{
+	padding: 15px 10px;
+	margin-top: 20px;
+	background-color: #FFFFFF;
+	display:flex ;
+	justify-content: flex-start;
+	align-items: center;
+	color: #BBBBBB;
+}
+
+.hidden{
+	display: none;
 }
