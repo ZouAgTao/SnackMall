@@ -9,7 +9,7 @@ var app =new Vue({
 	},
 	methods:{
 		to_myorder(){
-			window.location.href="";
+			window.location.href="/info/my_orders/from_homepage/";
 		},
 		
 		to_addresslist(){

@@ -10,6 +10,10 @@ from .models import Goods
 @gzip_page
 # @cache_page(60 * 15)
 def index(request):
+    #【debug】用于测试的代码，一定要记得删掉
+    if not request.session.get('user', None):
+        request.session['user'] = '13680721923'
+
     data_navs = []
     data_goods = []
 
@@ -106,8 +110,21 @@ def check_pay(request):
     pick_time = request.POST.get('pick_time', None)
     goods = request.POST.get('goods', None)
 
-    if not (recv_method and recv_info and pick_time and goods):
+    if recv_method == None or goods == None:
         return redirect('/')
+
+    if recv_method == 'true':
+        recv_method = True
+    else:
+        recv_method = False
+
+    if recv_method:
+        print(recv_method)
+        if not recv_info:
+            return redirect('/')
+    else:
+        if not pick_time:
+            return redirect('/')
 
     from apps.sm_info.models import Table
     import datetime
@@ -126,7 +143,7 @@ def check_pay(request):
         if len(dt_arr[i]) == 1:
             dt_arr[i] = '0' + dt_arr[i]
 
-    id = ''.join(dt_arr) + user_id[-4:] + random.randint(1000,9999)
+    id = ''.join(dt_arr) + user_id[-4:] + str(random.randint(1000,9999))
     dt = now_datetime
     status = 'A'
 
@@ -141,11 +158,13 @@ def check_pay(request):
         }
         real_recv_info = json.dumps(real_recv_info)
 
+    from apps.sm_auth.models import User
+
     # 写入订单数据库
     Table.objects.create(
         id = id,
         dt = dt,
-        user_id = str(user_id),
+        user_id = User.objects.get(id=user_id),
         status = status,
         recv_method = bool(recv_method),
         recv_info = real_recv_info,

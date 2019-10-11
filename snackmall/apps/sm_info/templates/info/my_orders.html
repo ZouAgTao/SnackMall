@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<base href="/static/" />
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>我的订单</title>
+		<link href="info/css/my_orders.css" type="text/css" rel="stylesheet" />
+		<link href="com_css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	</head>
+	<body >
+		<div id="app">
+			<div id="hd">
+				<div class="head">
+					<i class="fa fa-angle-left" style="font-size: 1.75rem; padding:10px ;" @click="toReturn()"></i>
+					<span class="title">我的订单</span>
+					<span></span>
+				</div>
+			</div>
+			<div id="bd">
+				<div class="orders_list">
+					<ul>
+						<!-- 在li标签添加点击跳转页面的逻辑 -->
+						<li v-for="(item,index) in orderList" :key="index" @click="  ">
+							<div class="order_card_header">
+								<div class="order_status">
+									<div :class="{status_circle_on : item.status =='已接单', status_circle_out :item.status !='已接单'}"></div><span
+									 style="display: inline-block;">[[item.status]]</span>
+								</div>
+								<span class="order_datatime"><i class="fa fa-clock-o" aria-hidden="true"></i> [[item.dt]]</span>
+							</div>
+							<div class="order_goods">
+								<ul>
+									<li v-for="(good,index2) in item.shopList.list" :key="index2">
+										<span class="good_name">[[good.name]]</span>
+										<span class="good_num">×[[good.num]]</span>
+									</li>
+								</ul>
+							</div>
+							<div class="order_card_footer">
+								<span>共[[item.total]]件商品</span><span style="font-size: 15px; padding-left: 15px;"> 合计：¥ [[item.shopList.sum]]</span>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div :class="{more_order:is_show ,hidden:!is_show }" @click="more_order()">加载更多..</div>
+
+
+		</div>
+
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="com_js/vue.js"></script>
+		<script src="info/js/my_orders.js"></script>
+		
+		<script>
+			app.$data.return_url = '{{ data_return_url|safe }}';
+		</script>
+		
+		<script>
+			// function init() {
+				var page = 0;
+				// 初始化发送页面请求
+				xmlHttp =  new XMLHttpRequest;
+				xmlHttp.open("post","//");
+				xmlHttp.send(app.$data.id);
+				for (let i = 0; i < app.$data.orderList.length; i++) {
+					let total = 0;
+					for (let j = 0; j < app.$data.orderList[i].shopList.list.length; j++) {
+						total += app.$data.orderList[i].shopList.list[j].num;
+					}
+					app.$data.orderList[i].total = total;
+				}
+				
+				
+			// }
+		</script>
+	</body>
+</html>
