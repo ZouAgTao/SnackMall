@@ -211,10 +211,11 @@ body {
 
 .pickTime{
 	border: none;
-	outline: none;
-	background: none;
-	font-size: 14px;
-	padding: 10px;
+	border-bottom: 1px solid #EEEEEE;
+	height: 50px;
+	width: 100%;
+	font-size: 20px;
+	text-align: center;
 
 }
 
