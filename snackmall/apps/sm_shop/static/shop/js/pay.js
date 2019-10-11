@@ -87,6 +87,11 @@ var app = new Vue({
 			// console.log("当前商品信息："+document.getElementById("goods").value);
 			
 			document.getElementById("order_form").submit();
+			
+			this.shopList.list.splice(0,this.shopList.list.length);
+			this.shopList.sum=0;
+			shopList_info = JSON.stringify(this.shopList);
+			localStorage.setItem('shopList',shopList_info);
 		},
 		
 		returnTo(){
