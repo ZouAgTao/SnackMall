@@ -47,6 +47,7 @@
 				</div>
 			</div>
 			<div :class="{more_order:is_show ,hidden:!is_show }" @click="more_order()">加载更多..</div>
+			<div :class="{more_order:!is_show ,hidden:is_show }">没有更多订单了..</div>
 
 
 		</div>
@@ -60,14 +61,14 @@
 		</script>
 		
 		<script>
-			var page = 0;
-			var json = get_orderList( page );
+			var page = app.$data.now_page;
+			var json = app.get_orderList(page);
 			if(json.result){
 				for (let i = 0; i < json.list.length; i++) {
-					this.orderList.push(json.list[i]);
+					app.$data.orderList.push(json.list[i]);
 				}
 			}else{
-				this.is_show = false;
+				app.$data.is_show = false;
 			}
 		</script>
 	</body>
