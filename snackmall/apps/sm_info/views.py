@@ -75,8 +75,6 @@ def get_orders_list_info(request):
     tables = Table.objects.filter(user_id=users[0]).order_by('-dt')
     paginator = Paginator(tables, 8)
 
-    print(paginator.num_pages)
-
     if paginator.count == 0 or page_num > paginator.num_pages:
         data_page_info['result'] = False
     else:

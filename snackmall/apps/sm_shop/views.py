@@ -174,8 +174,6 @@ def check_pay(request):
         goods = json.dumps(goods)
     )
 
-    # 【debug】加入过期列表
-
     # 【debug】提醒卖家端
 
     # 跳转到订单页
