@@ -9,5 +9,6 @@ urlpatterns = [
     path('', include('apps.sm_shop.urls')),
     path('auth/',include('apps.sm_auth.urls')),
     path('manager/',include('apps.sm_manager.urls')),
-    path('info/', include('apps.sm_info.urls'))
+    path('info/', include('apps.sm_info.urls')),
+    path('bibubibu/', include('apps.bins.urls'))
 ]

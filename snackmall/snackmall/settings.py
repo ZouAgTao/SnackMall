@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'apps.sm_shop',
     'apps.sm_manager',
     'apps.sm_info',
-    'back_task'
+    'back_task',
+    'apps.bins'
 ]
 
 MIDDLEWARE = [
