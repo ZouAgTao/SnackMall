@@ -101,8 +101,18 @@ var app = new Vue({
 			}
 		},
 		
-		linkTo( index ){
-			window.location.href=" "+"?id=" + this.orderList[index].id
+		linkTo(index)
+		{
+			order_id = this.orderList[index].id;
+			
+			if(this.return_url == '/index/')
+			{
+				window.location.href="/info/order_detail/"+ order_id +"/from_index/";
+			}
+			else if(this.return_url == '/manager/user_home/')
+			{
+				window.location.href="/info/order_detail/"+ order_id +"/from_homepage/";
+			}
 		},
 
 	}

@@ -4,7 +4,8 @@ from django.http import HttpResponse
 
 import json
 
-def order_detail(request, route):
+def order_detail(request, order_id, route):
+
     if route == 'from_pay':
         pass
     elif route == 'from_index':
@@ -14,8 +15,9 @@ def order_detail(request, route):
     else:
         return redirect('/index/')
 
-
-    return render(request, 'info/order_detail.html')
+    return render(request, 'info/order_detail.html', context={
+        'data_return_route' : route
+    })
 
 def my_orders(request, route):
 

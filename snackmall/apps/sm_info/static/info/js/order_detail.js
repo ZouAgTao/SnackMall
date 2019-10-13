@@ -3,6 +3,7 @@ var app = new Vue({
 	delimiters: ['[[', ']]'],
 	data: {
 		total: 0,
+		return_route : 'from_index',
 		order: {
 			id: 12345,
 			dt: '2019-10-4 4:30',
@@ -50,9 +51,16 @@ var app = new Vue({
 		},
 		
 		//左上角返回按钮
-		returnTo(){
-			window.history.back();
-			console.log("返回成功")
+		returnTo()
+		{
+			if(this.return_route == 'from_pay')
+			{
+				window.location.href = '/index/';
+			}
+			else
+			{
+				window.location.href = '/info/my_orders/'+ this.return_route +'/';
+			}
 		},
 		
 	}

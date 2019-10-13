@@ -178,4 +178,4 @@ def check_pay(request):
     # 【debug】提醒卖家端
 
     # 跳转到订单页
-    return redirect('/info/order_detail/')
+    return redirect('/info/order_detail/%s/from_pay/' % (id))
