@@ -4,6 +4,17 @@ from apps.sm_info.models import Table
 
 import datetime
 
+# 初始化脚本
+def init():
+    from apps.bins.models import Config
+    configs = Config.objects.filter(key='A_orders_updated')
+    if len(configs) == 0:
+        Config.objects.create(key='A_orders_updated', value='true')
+    else:
+        Config.objects.filter(key='A_orders_updated').update(value='true')
+
+init()
+
 # 启动后台定时任务
 try:
     scheduler = BackgroundScheduler()

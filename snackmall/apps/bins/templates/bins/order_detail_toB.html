@@ -5,8 +5,8 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<link href="com_css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
-		<link href="info/css/order_detail.css" type="text/css" rel="stylesheet" />
+		<link href="bins/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="bins/css/order_detail_toB.css" type="text/css" rel="stylesheet" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/5.1.0/math.js"></script>
 		<script>
 			//引入math.js 解决js计算精度问题 ,该方法要在index.js加载前进行加载
@@ -65,7 +65,7 @@
 							<span class="info_name">订单编号：</span><span>[[order.id]]</span>
 						</div>
 						<div class="order-info-line">
-							<span class="info_name">配送方式：</span><span v-show="order.recv_method">送货上门</span> <span v-show="!order.recv_method">自提</span>
+							<span class="info_name">下单用户：</span><span>[[order.user_id]]</span>
 						</div>
 						<div v-if="order.recv_method" class="order-info-line">
 							<span v-if="order.recv_method" class="info_name">收货地址：</span>
@@ -74,18 +74,19 @@
 								[[order.recv_info.recv_name]]&nbsp;&nbsp;&nbsp;[[order.recv_info.recv_phone]]
 							</span>
 						</div>
-						<!-- <div class="order-info-line">
-							<span class="info_name">配送方式：</span><span v-show="order.recv_method">送货上门</span> <span v-show="!order.recv_method">自提</span>
-						</div> -->
-						<div v-if="!order.recv_method" class="order-info-line" v-show="!order.recv_method">
-							<span v-if="!order.recv_method" class="info_name">自提时间：</span><span>[[order.recv_info.time]]</span>
+						<div class="order-info-line">
+							<span class="info_name">配送方式：</span><span v-if="order.recv_method">送货上门</span> <span v-show="!order.recv_method">自提</span>
+						</div>
+						<div class="order-info-line" v-if="!order.recv_method">
+							<span v-if="!order.recv_method" class="info_name">自提时间：</span><span v-if="!order.recv_method">[[order.recv_info.time]]</span>
 						</div>
 						<div class="order-info-line">
 							<span class="info_name">下单时间：</span><span>[[order.dt]]</span>
 						</div>
 					</div>
-					<div style="display: flex; justify-content: flex-end;">
+					<div style="display: flex; justify-content: space-between; margin-top: 20px;">
 						<div :class="{cancel_button: order.status=='已接单',hidden: order.status!='已接单'}" @click="cancel_order()">取消订单</div>
+						<div :class="{confirm_button: order.status=='已接单',hidden: order.status!='已接单'}" @click="confirm()">确认完成</div>
 					</div>
 				</div>
 				
@@ -96,18 +97,11 @@
 
 		</div>
 		
-		<script src="com_js/vue.js"></script>
-		<script src="info/js/order_detail.js"></script>
-		
+		<script src="bins/js/vue.js"></script>
+		<script src="bins/js/order_detail_toB.js"></script>
 		<script>
-			app.$data.return_route = '{{ data_return_route|safe }}';
-			
-			var json_order = '{{ data_order|safe }}';
-			var data_order = JSON.parse(json_order);
-			
-			app.$data.order = data_order;
+			app.$data.order = JSON.parse('{{ data_order|safe }}');
 		</script>
-		
 		<script>
 			//初始化计算商品数量
 			for(let i=0; i<app.$data.order.shopList.list.length; i++){

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<base href="/static/" />
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>订单中心</title>
+		<link href="bins/css/order_list_toB.css" type="text/css" rel="stylesheet" />
+		<link href="bins/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	</head>
+	<body>
+		<div id="app">
+			<div id="hd">
+				<div class="tab-head">
+					<ul>
+						<li v-for="(item,index) in tabs" :class="{active:index == num}" @click="tab(index)">[[item]]</li>
+					</ul>
+				</div>
+			</div>
+			<div id="bd">
+				<!-- <div v-for='(item,index) in orderList' v-show=" index == status">
+				</div> -->
+				<div class="orders_list">
+					<ul>
+						<li v-for="(item,index) in orderList" @click="linkTo(index)">
+							<div class="order_card_header">
+								<span class="order_datatime"><i class="fa fa-clock-o" aria-hidden="true"></i> [[item.dt]]</span>
+								<span class="pay_method" v-if="item.recv_method">配送</span>
+								<span class="pay_method" v-if="!item.recv_method">自取</span>
+							</div>
+							<div class="order_card_info" v-if="item.recv_method">
+								<span class="inline-block">[[item.recv_info.recv_name]]
+									[[item.recv_info.recv_location.building]][[item.recv_info.recv_location.dormi_num]]</span>
+								<span class="inline-block">[[item.recv_info.recv_phone]]</span>
+							</div>
+							<div class="order_card_info" v-if="!item.recv_method">
+								<span class="inline-block">[[item.recv_info.time]]  上门自取</span>
+								<span class="inline-block">[[item.id]]</span>
+							</div>
+							<div class="order_goods">
+								<p class="order_goods_header">商品:</p>
+								<ul>
+									<li v-for="(good,index1) in item.shopList.list" :key="index1" style="display:flex ;align-items: center ;justify-content: space-between;">
+										<div style="display:inline-block;">
+											<span class="good_name">[[good.name]]</span>
+											<span class="good_num">×[[good.num]]</span>
+										</div>
+										<span style="display: inline-block;">¥ [[(good.price *good.num).toFixed(2)]]</span>
+									</li>
+								</ul>
+							</div>
+							<div class="order_card_footer">
+								<div style="padding-bottom: 15px;"> 合计：<span style="font-size: 18px; font-weight: 500;">¥ [[item.shopList.sum]]</span></div>
+								<div class="confirm_button" @click.stop="confirm(index)" v-show="item.status == '已接单'">确认完成</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- <audio src="bins/audio/order.mp3" style='display:none' id='audio'></audio> -->
+
+		</div>
+
+
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="bins/js/vue.js"></script>
+		<script src="bins/js/order_list_toB.js"></script>
+		<script>
+			function getinfo( num ){
+				var xmlHttp = new XMLHttpRequest();
+				switch (num){
+					case 0: xmlHttp.open("POST","/bibubibu/get_A_list/");
+						break;
+					case 1: xmlHttp.open("POST","/bibubibu/get_S_list/");
+						break;
+					case 2: xmlHttp.open("POST","/bibubibu/get_C_list/");
+						break;
+					default:
+						break;
+				}
+				xmlHttp.send();
+				xmlHttp.onreadystatechange = function(){
+					if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+						var json = JSON.parse(xmlHttp.responseText);
+						if ( json.updated ) { 
+							//如果result 返回值是true。则正确收到
+							app.$data.orderList = json.list;
+							if(num==0)
+							{
+								// document.getElementById('audio').play();
+								var audio = new Audio('bins/audio/order.mp3');
+								audio.play();
+							}
+						}
+					}
+				};
+			}
+			// document.getElementById('audio').play();
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open("POST","/bibubibu/get_A_list_fixed/");
+			xmlHttp.send();
+			xmlHttp.onreadystatechange = function(){
+				if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+					var json = JSON.parse(xmlHttp.responseText);
+					app.$data.orderList = json.list;
+				}
+			};
+			// getinfo( app.$data.num );
+			window.setInterval(function(){
+				getinfo( app.$data.num );
+			},3000);
+			
+	
+		</script>
+		<!-- 新订单获取，调用浏览器的声音提示功能 -->
+		
+		
+		
+	</body>
+</html>

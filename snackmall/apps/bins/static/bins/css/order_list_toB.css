@@ -1,0 +1,166 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+
+li {
+	list-style: none;
+}
+
+html,body {
+	background-color: #F4F4F4;
+	font-size: 14px;
+	color: #3E3E3E;
+	height: 100%;
+	font-family: "微软雅黑";
+}
+
+#app {
+	width: 100%;
+	height: 100%;
+	max-width: 640px;
+	margin: 0 auto;
+	position: relative;
+
+}
+
+.tab-head{
+	display: flex;
+	align-items: center;
+	padding: 7px 30px;
+	background-color: #FFFFFF;
+	font-size: 16px;
+}
+
+.tab-head ul{
+	display: flex;
+	justify-content: space-between;
+	width:100%;
+}
+
+.tab-head li{
+	float: left;
+	padding: 8px 0;
+}
+
+
+.active{
+	color: #FFC239;
+	font-weight: bold;
+	border-bottom: #FFC239 2px solid;
+}
+
+
+.orders_list {
+	margin-top: 10px;
+}
+
+
+.orders_list>ul>li {
+	margin: 5px 15px 15px 15px;
+	/* border: #000000 1px solid; */
+	border-radius: 10px;
+	background-color: #FFFFFF;
+}
+
+.order_datatime{
+	color: gray;
+}
+
+.pay_method{
+	color: gray;
+	font-weight: 500;
+}
+
+.order_card_header {
+	padding: 7px 0;
+	margin: 0 10px;
+	border-bottom: #EEEEEE 1px solid;
+	display: flex;
+	justify-content: space-between;
+}
+
+.order_card_header span {
+	display: inline-block;
+	line-height: 25px;
+}
+
+.order_card_info{
+	padding: 12px 0;
+	margin: 0 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: #EEEEEE 1px solid;
+}
+
+.inline-block{
+	display: inline-block;
+}
+
+.order_goods{
+	/* padding: 8px 0; */
+	margin: 0 10px;
+	padding-bottom: 10px;
+	border-bottom: #EEEEEE 1px solid;
+}
+
+.order_goods_header{
+	font-size: 16px;
+	font-weight: 300;
+	line-height: 30px;
+}
+
+.order_goods>ul>li{
+	line-height: 26px;
+	font-weight: bold;
+}
+
+.good_name{
+	padding-right: 50px;
+}
+
+.order_card_footer {
+	display: flex;
+	justify-content: flex-end;
+	flex-direction: column;
+	align-items: flex-end;
+	padding: 10px 10px;
+/* 	letter-spacing: 1px; */
+}
+
+.confirm_button {
+	padding: 3px 10px;
+	width: 60;
+	/* line-height: px; */
+	border-radius: 20px;
+	background-color: rgba(255, 255, 255, 0);
+	color: #FFB205;
+	font-size: 12px;
+	font-weight: bolder;
+	text-align: center;
+	border: 1px solid #FFDA87;
+}
+
+.confirm_button:active{
+	padding: 3px 10px;
+	width: 60;
+	/* line-height: px; */
+	border-radius: 20px;
+	background-color: rgba(255, 255, 255, 0);
+	color: #FBB61C;
+	font-size: 12px;
+	text-align: center;
+	border: 1px solid #FBB61C;
+}
+
+.more_order{
+	text-align: center;
+	font-size: 14px;
+	color: #BBBBBB;
+	margin-bottom: 50px;
+}
+
+.hidden{
+	display: none;
+}

@@ -10,10 +10,6 @@ from .models import Goods
 @gzip_page
 # @cache_page(60 * 15)
 def index(request):
-    #【debug】用于测试的代码，一定要记得删掉
-    if not request.session.get('user', None):
-        request.session['user'] = '13680721923'
-
     data_navs = []
     data_goods = []
 
@@ -154,9 +150,7 @@ def check_pay(request):
         real_recv_info = json.dumps(recv_info)
     else:
         real_recv_info = {
-            'recv_info' : {
-                'time' : str(pick_time)
-            }
+            'time' : str(pick_time)
         }
         real_recv_info = json.dumps(real_recv_info)
 
@@ -174,6 +168,8 @@ def check_pay(request):
     )
 
     # 【debug】提醒卖家端
+    from apps.bins.models import Config
+    Config.objects.filter(key='A_orders_updated').update(value='true')
 
     # 跳转到订单页
     return redirect('/info/order_detail/%s/from_pay/' % (id))
