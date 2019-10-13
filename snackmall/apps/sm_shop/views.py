@@ -114,6 +114,7 @@ def check_pay(request):
         return redirect('/')
 
     goods = json.loads(goods)
+    recv_info = json.loads(recv_info)
 
     if recv_method == 'true':
         recv_method = True

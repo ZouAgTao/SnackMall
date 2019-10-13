@@ -98,6 +98,11 @@
 		
 		<script>
 			app.$data.return_route = '{{ data_return_route|safe }}';
+			
+			var json_order = '{{ data_order|safe }}';
+			var data_order = JSON.parse(json_order);
+			
+			app.$data.order = data_order;
 		</script>
 		
 		<script>

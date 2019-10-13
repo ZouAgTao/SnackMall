@@ -5,6 +5,26 @@ from django.http import HttpResponse
 import json
 
 def order_detail(request, order_id, route):
+    user_id = request.session.get('user', None)
+
+    if not user_id:
+        return redirect('/auth/login/')
+
+    from .models import Table
+    import datetime
+
+    tables = Table.objects.filter(id=order_id)
+
+    data_order = {
+        'id' : tables[0].id,
+        'dt' : datetime.datetime.strftime(tables[0].dt, '%Y-%m-%d %H:%M:%S'),
+        'status' : tables[0].get_status_display(),
+        'recv_method' : tables[0].recv_method,
+        'recv_info' : json.loads(tables[0].recv_info),
+        'shopList' : json.loads(tables[0].goods)
+    }
+
+    data_order = json.dumps(data_order)
 
     if route == 'from_pay':
         pass
@@ -16,7 +36,8 @@ def order_detail(request, order_id, route):
         return redirect('/index/')
 
     return render(request, 'info/order_detail.html', context={
-        'data_return_route' : route
+        'data_return_route' : route,
+        'data_order' : data_order
     })
 
 def my_orders(request, route):
@@ -69,6 +90,7 @@ def get_orders_list_info(request):
             shop_list = json.loads(page_content_item.goods)
 
             temp_list.append({
+                'id' : page_content_item.id,
                 'status' : page_content_item.get_status_display(),
                 'dt' : datetime.datetime.strftime(page_content_item.dt,'%Y-%m-%d %H:%M:%S'),
                 'shopList' : shop_list
