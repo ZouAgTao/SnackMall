@@ -97,3 +97,31 @@ def get_orders_list_info(request):
     data_page_info = json.dumps(data_page_info)
 
     return HttpResponse(data_page_info)
+
+def cacel_order(request):
+    user_id = request.session.get('user', None)
+
+    if not user_id:
+        return redirect('/auth/login/')
+
+    from django.http import HttpResponse
+
+    order_id = request.POST.get('order_id', None)
+    data_json = {
+        'result': False
+    }
+
+    if not order_id:
+        return HttpResponse(json.dumps(data_json))
+
+    from .models import Table
+
+    tables = Table.objects.filter(id=order_id)
+
+    if len(tables) > 0 :
+        Table.objects.filter(id=order_id).update(status='C')
+        data_json = {
+            'result': True
+        }
+
+    return HttpResponse(json.dumps(data_json))

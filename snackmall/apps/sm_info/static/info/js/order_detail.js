@@ -32,22 +32,29 @@ var app = new Vue({
 	},
 	methods: {
 		cancel_order() {
+			var that = this;
 			//ajax发送异步请求
 			xmlHttp = new XMLHttpRequest();
-			xmlHttp.open("post", "");
-			xmlHttp.send(this.order.id);
+			xmlHttp.open("post", "/info/cacel_order/");
+			xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 			xmlHttp.onreadystatechange = function() {
-				if (xmlHttp.readyState == 4&& xmlHttp.status ==200 ) {
+				if (xmlHttp.readyState == 4 && xmlHttp.status ==200 )
+				{
 					var json = JSON.parse(xmlHttp.responseText);
-					if(json.result){ //如果result 返回值是true更改状态
-						this.order.statue = "已取消";
-					}else{
-						alert("订单取消失败！");
+					if(json.result)
+					{ //如果result 返回值是true更改状态
+						that.order.statue = "已取消";
+						window.location.reload();
 					}
-				} else {
-					alert("订单取消失败！");
+					else
+					{
+						alert("订单取消失败！");
+						return;
+					}
 				}
 			}
+			
+			xmlHttp.send('order_id=' + this.order.id);
 		},
 		
 		//左上角返回按钮

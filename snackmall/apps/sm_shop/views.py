@@ -114,15 +114,14 @@ def check_pay(request):
         return redirect('/')
 
     goods = json.loads(goods)
-    recv_info = json.loads(recv_info)
 
     if recv_method == 'true':
         recv_method = True
+        recv_info = json.loads(recv_info)
     else:
         recv_method = False
 
     if recv_method:
-        print(recv_method)
         if not recv_info:
             return redirect('/')
     else:
