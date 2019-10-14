@@ -42,6 +42,30 @@ def check_login(request):
     else:
         return redirect('/auth/login/')
 
+def sendMsg(phone, code):
+
+
+    from qcloudsms_py import SmsSingleSender
+    from qcloudsms_py.httpclient import HTTPError
+
+    appid = 1400265177
+    appkey = '6c6189b044f0ed2edad70183037f4e19'
+    template_id = 443313
+    sms_sign = 'SCNU南苑'
+
+    ssender = SmsSingleSender(appid, appkey)
+    code = str(code)
+    params = [code]
+
+    try:
+        result = ssender.send_with_param(86, str(phone), template_id, params, sign=sms_sign, extend="", ext="")
+    except HTTPError as e:
+        print('【短信发送失败】（ %s | %s ）' % (phone,code))
+        print(e)
+    except Exception as e:
+        print('【短信发送失败】（ %s | %s ）' % (phone, code))
+        print(e)
+
 def send_check_code(request, phone):
     from django.http import HttpResponse
     if phone:
@@ -49,7 +73,9 @@ def send_check_code(request, phone):
 
         import random
         check_code = random.randint(1000,9999)
+
         # 调用腾讯云的短息sdk
+        sendMsg(phone, check_code)
 
         if len(phones) > 0:
             phones.update(check_code=check_code)

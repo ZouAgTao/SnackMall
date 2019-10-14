@@ -25,9 +25,9 @@ var app = new Vue({
 		},
 		
 		RecvInfoB:{
-			recv_name : 'HJL',
-			recv_phone: 13068640035,
-			recv_location: '学生宿舍H栋111',
+			recv_name : '店长',
+			recv_phone: 13129193950,
+			recv_location: '华南师范大学G座一楼大门口',
 		},
 	},
 	computed:{
