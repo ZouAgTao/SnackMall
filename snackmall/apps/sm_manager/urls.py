@@ -3,6 +3,7 @@ import apps.sm_manager.views as views
 
 urlpatterns = [
     path('forget_psw/', views.forget_psw),
+    path('logout/', views.logout),
     path('add_address/<path:route>/', views.add_address),
     path('check_add_address/', views.check_add_address),
     path('user_home/', views.user_home),

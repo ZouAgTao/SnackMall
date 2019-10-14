@@ -7,6 +7,10 @@ import json
 def forget_psw(request):
     return render(request,'manager/forgetPsw.html')
 
+def logout(request):
+    request.session.flush()
+    return redirect('/manager/user_home/')
+
 @gzip_page
 def add_address(request, route):
     user_id = request.session.get('user', None)

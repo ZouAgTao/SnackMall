@@ -8,6 +8,11 @@ var app =new Vue({
 		
 	},
 	methods:{
+		logout()
+		{
+			window.location.href="/manager/logout/";
+		},
+		
 		to_myorder(){
 			window.location.href="/info/my_orders/from_homepage/";
 		},
