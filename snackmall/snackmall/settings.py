@@ -59,6 +59,10 @@ MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',
 ]
 
+MIDDLEWARE_CLASSES = {
+    'django.middleware.gzip.GZipMiddleware',
+}
+
 ROOT_URLCONF = 'snackmall.urls'
 
 TEMPLATES = [
@@ -134,7 +138,6 @@ USE_TZ = False
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_COOKIE_AGE = 2592000
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

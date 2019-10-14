@@ -3,6 +3,9 @@ from django.urls import path
 import apps.bins.views as views
 
 urlpatterns = [
+    path('',views.login),
+    path('relogin/', views.relogin),
+    path('check_pass/', views.check_pass),
     path('dashboard/', views.dashboard),
     path('get_A_list/', views.get_A_list),
     path('get_A_list_fixed/', views.get_A_list_fixed),

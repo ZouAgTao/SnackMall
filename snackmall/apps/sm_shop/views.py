@@ -8,7 +8,7 @@ from .models import Types
 from .models import Goods
 
 @gzip_page
-# @cache_page(60 * 15)
+@cache_page(60)
 def index(request):
     data_navs = []
     data_goods = []
@@ -52,6 +52,7 @@ def check_user(request):
     else:
         return redirect('/auth/login/')
 
+@gzip_page
 def pay(request):
     user_id = request.session.get('user', None)
     if not user_id:

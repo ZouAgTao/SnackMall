@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
+from django.views.decorators.gzip import gzip_page
 
 import json
 
+@gzip_page
 def forget_psw(request):
     return render(request,'manager/forgetPsw.html')
 
+@gzip_page
 def add_address(request, route):
     user_id = request.session.get('user', None)
     if not user_id:
@@ -62,6 +65,7 @@ def check_add_address(request):
 
     return redirect(route_url)
 
+@gzip_page
 def user_home(request):
     user_id = request.session.get('user', None)
     if not user_id:
@@ -75,6 +79,7 @@ def user_home(request):
 
     return render(request, 'manager/user_homepage.html', context={'data_nickname' : nickname})
 
+@gzip_page
 def address_list_from_pay(request):
     user_id = request.session.get('user', None)
     if not user_id:
@@ -89,6 +94,7 @@ def address_list_from_pay(request):
 
     return render(request, 'manager/address_list_from_pay.html', context={'data_recv_infos' : json.dumps(data_recv_infos) })
 
+@gzip_page
 def address_list_from_homepage(request):
     user_id = request.session.get('user', None)
     if not user_id:
@@ -159,6 +165,7 @@ def delete_recv_infos(request):
     from django.http import HttpResponse
     return HttpResponse('')
 
+@gzip_page
 def edit_address(request, id, route):
     user_id = request.session.get('user', None)
     if not user_id:

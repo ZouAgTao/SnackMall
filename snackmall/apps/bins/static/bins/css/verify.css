@@ -1,0 +1,30 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+html,body {
+	font-size: 14px;
+	color: #3E3E3E;
+	height: 100%;
+}
+
+#app {
+	width: 100%;
+	height: 100%;
+	max-width: 640px;
+	margin: 0 auto;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+}
+
+
+.verify_box{
+	font-size: 18px;
+  border: #EEEEEE 1px solid;
+	padding: 50px 50px;
+}
+

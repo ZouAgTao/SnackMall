@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 
+from django.views.decorators.gzip import gzip_page
+
 import json
 
+@gzip_page
 def order_detail(request, order_id, route):
     user_id = request.session.get('user', None)
 
@@ -40,6 +43,7 @@ def order_detail(request, order_id, route):
         'data_order' : data_order
     })
 
+@gzip_page
 def my_orders(request, route):
 
     return_url = '/index/'

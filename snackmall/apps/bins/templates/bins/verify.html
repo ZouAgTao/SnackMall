@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<base href="/static/"/>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>商家认证</title>
+		<link href="bins/css/verify.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript">
+			var err_msg = {{ data_msg|safe }};
+			if(err_msg==1)
+			{
+				alert('口令错误😀');
+			}
+		</script>
+	</head>
+	<body>
+		<div id="app">
+			<div class="verify_box" >
+				<form action="/bibubibu/check_pass/" method="post" >
+				密匙：<input type="password" name='password' v-model="code"/>
+				<input type="submit" value="进入"/>
+				</form>
+			</div>
+		</div>
+		
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="bins/js/vue.js"></script>
+		<script src="bins/js/verify.js"></script>
+	</body>
+</html>

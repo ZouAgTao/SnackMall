@@ -3,9 +3,32 @@ from django.http import HttpResponse
 from .models import Config
 from apps.sm_info.models import Table
 
+from django.views.decorators.gzip import gzip_page
+
 import json
 import datetime
 
+@gzip_page
+def login(request):
+    return render(request, 'bins/verify.html', context={'data_msg' : 0})
+
+@gzip_page
+def relogin(request):
+    return render(request, 'bins/verify.html', context={'data_msg' : 1})
+
+def check_pass(request):
+    password = request.POST.get('password', None)
+
+    if password == None:
+        return redirect('/index/')
+
+    if password == 'bubibubi':
+        request.session['buser'] = 'seller'
+        return redirect('/bibubibu/dashboard/')
+    else:
+        return redirect('/bibubibu/relogin/')
+
+@gzip_page
 def dashboard(request):
     buser_id = request.session.get('buser', None)
     if not buser_id:
@@ -13,6 +36,7 @@ def dashboard(request):
 
     return render(request, 'bins/order_list_toB.html')
 
+@gzip_page
 def get_A_list_fixed(request):
     buser_id = request.session.get('buser', None)
     if not buser_id:
@@ -40,6 +64,7 @@ def get_A_list_fixed(request):
         'list': data_order_list
     }))
 
+@gzip_page
 def get_A_list(request):
     buser_id = request.session.get('buser', None)
     if not buser_id:
@@ -74,6 +99,7 @@ def get_A_list(request):
     else:
         return HttpResponse(json.dumps({'updated' : False}))
 
+@gzip_page
 def get_S_list(request):
     buser_id = request.session.get('buser', None)
     if not buser_id:
@@ -101,6 +127,7 @@ def get_S_list(request):
         'list': data_order_list
     }))
 
+@gzip_page
 def get_C_list(request):
     buser_id = request.session.get('buser', None)
     if not buser_id:
