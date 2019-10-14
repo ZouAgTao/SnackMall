@@ -64,9 +64,10 @@
 							<div v-show="!show" class="getVercode">[[count]]s</div>
 						</div>
 					</div>
-					<input type="button" class="btn" id="registerBtn" value="注册" @click="checkInfo()"/>
+					<!-- <input type="button" class="btn" id="registerBtn" value="注册" @click="checkInfo()"/> -->
+					<div class="btn" id="registerBtn" @click="checkInfo()">注册</div>
 				</form>
-					<div class="toLogin" @click="toLogin()" >登陆已有账号</div>
+					<!-- <div class="toLogin" @click="toLogin()" >登陆已有账号</div> -->
 				<!-- <h4>[[usn]]</h4> -->
 			</div>
 

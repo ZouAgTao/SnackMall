@@ -26,6 +26,7 @@ a{
 body {
 	background: #F4F4F4;
 	font-size: 14px;
+	font-family: "Helvetica Neue",Helvetica,Arial,"Microsoft Yahei","Hiragino Sans GB","Heiti SC","WenQuanYi Micro Hei",sans-serif;
 }
 
 .loginBox {
@@ -73,7 +74,7 @@ body {
 	height: 44px;
 	width: 90%;
 	margin:1.4375rem 5% 0.625rem;
-	line-height: 26px;
+	line-height: 44px;
 	border-radius: 8px;
 	background-color: rgba(28, 223, 112, 1);
 	color: rgba(255, 255, 255, 1);
@@ -86,7 +87,7 @@ body {
 	height: 44px;
 	width: 90%;
 	margin: 1.4375rem 5% 0.625rem;
-	line-height: 26px;
+	line-height: 44px;
 	border-radius: 8px;
 	background-color: #129F4F;
 	color: rgba(255, 255, 255, 1);
